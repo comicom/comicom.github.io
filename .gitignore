@@ -6,5 +6,5 @@ vendor
 
 _layouts
 _includes
-_sass
+# _sass
 assets/css
