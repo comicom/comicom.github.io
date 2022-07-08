@@ -180,6 +180,10 @@ exclude:
   - tmp
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
+  # - _layouts
+  # - _includes
+  # - _sass
+  # - assets/css
 keep_files:
   - .git
   - .svn
