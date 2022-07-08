@@ -1,0 +1,28 @@
+---
+layout: post
+title:  "TODO"
+date:   2022-07-08 12:10:28 +0900
+categories: etc
+---
+
+how to costom github blog using jekyll
+
+jenkins / docker
+
+- Yocto
+- Linux
+- Android
+- wareOS
+- watchOS
+
+Cython
+
+AI model
+
+MATLAB
+
+XML
+
+- C/C++
+- python
+- Rust
