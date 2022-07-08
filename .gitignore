@@ -4,7 +4,7 @@ _site
 .jekyll-metadata
 vendor
 
-_layouts
+# _layouts
 _includes
 # _sass
 assets/css
