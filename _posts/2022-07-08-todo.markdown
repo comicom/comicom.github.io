@@ -15,9 +15,10 @@ jenkins / docker
 - wareOS
 - watchOS
 
-Cython
-
 AI model
+
+- Cython
+- CUDA programming
 
 MATLAB
 
@@ -27,10 +28,11 @@ XML
 - python
 - Rust
 
-kotlin
+Web
+
+- kotlin
+- spring
+- webflux
 
 redis
 
-spring
-
-webflux
