@@ -25,6 +25,9 @@ MATLAB
 XML
 
 - C/C++
+    - thread
+    - future
+    - mutex
 - python
 - Rust
 

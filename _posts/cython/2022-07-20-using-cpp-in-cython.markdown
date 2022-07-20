@@ -1,7 +1,7 @@
 ---
 layout: posts
 title:  Using C++ in Cython
-date:   2022-07-20 21:30:46 +0900
+date:   2022-07-20 21:35:46 +0900
 categories:
   - Cython
 tags:
@@ -10,6 +10,7 @@ tags:
   - C++ 11
   - Cython
   - Python
+  - wrapping
 ---
 
 version: 3.0.0a10
