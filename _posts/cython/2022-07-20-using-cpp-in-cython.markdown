@@ -1,6 +1,6 @@
 ---
 layout: posts
-title:  Using C++ in Cython
+title:  "Using C++ in Cython: simple tutorial"
 date:   2022-07-20 21:35:46 +0900
 categories:
   - Cython
@@ -32,7 +32,9 @@ version: 3.0.0a10
   5. Create Cython wrapper class (B.pxd file): ** to make this accessible from external Python code **
   6. Compilation and Importing (setup.py)
 
-example codes: https://github.com/comicom/cython_test
+## Practice
+
+[example codes](https://github.com/comicom/cython_test/tree/main/examples/cpp-in-cython/01-simple-tutorial)
 
 ref.
 
