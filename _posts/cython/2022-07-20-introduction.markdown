@@ -42,8 +42,7 @@ pip install Cython==3.0.0a10
 
 # Building Cython Code
 
-Cython code must, unlike Python, be compiled.
-
+Cython code must, unlike Python, be compiled. The general procedure for compiling Cython can now be described as follows:
   - .pyx
   - .pyd
   - setup.py
