@@ -1,0 +1,56 @@
+---
+layout: posts
+title:  Thread library on C++
+date:   2022-07-19 02:33:46 +0900
+categories:
+  - C++
+tags:
+  - language
+  - C++ 11
+  - thread
+  - multi-threading
+---
+
+Multithreading support was introduced in C++11.
+
+The thread classes and related functions are defined in the thread header file. std::thread is the thread class that represents a single thread in C++. To start a thread we simply need to create a new thread object and pass the executing code to be called (i.e, a callable object) into the constructor of the object.
+
+Next is basic thread example written with c++.
+
+{% highlight c++ %}
+// thread example
+#include <iostream>       // std::cout
+#include <thread>         // std::thread
+ 
+void foo() 
+{
+  // do stuff...
+}
+
+void bar(int x)
+{
+  // do stuff...
+}
+
+int main() 
+{
+  std::thread first (foo);     // spawn new thread that calls foo()
+  std::thread second (bar,0);  // spawn new thread that calls bar(0)
+
+  std::cout << "main, foo and bar now execute concurrently...\n";
+
+  // synchronize threads:
+  first.join();                // pauses until first finishes
+  second.join();               // pauses until second finishes
+
+  std::cout << "foo and bar completed.\n";
+
+  return 0;
+}
+{% endhighlight %}
+
+ref.
+
+https://cplusplus.com/reference/thread/
+
+https://www.geeksforgeeks.org/multithreading-in-cpp/#:~:text=std%3A%3Athread%20is%20the%20thread%20class%20that%20represents%20a,which%20will%20execute%20the%20code%20specified%20in%20callable.
