@@ -1,7 +1,7 @@
 ---
 layout: posts
-title:  Calling C function and Using C libraies
-date:   2022-07-20 20:30:46 +0900
+title:  Using C++ in Cython
+date:   2022-07-20 21:30:46 +0900
 categories:
   - Cython
 tags:
