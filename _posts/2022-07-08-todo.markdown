@@ -7,6 +7,26 @@ categories: etc
 
 how to costom github blog using jekyll
 
+Web
+
+- java
+- kotlin
+- spring
+- webflux
+
+블록체인
+
+- BlockChain
+- DID
+- FIDO
+- PKI
+
+XML
+
+redis
+
+MATLAB
+
 jenkins / docker
 
 - Yocto
@@ -20,9 +40,7 @@ AI model
 - Cython
 - CUDA programming
 
-MATLAB
-
-XML
+language
 
 - C/C++
     - thread
@@ -30,12 +48,3 @@ XML
     - mutex
 - python
 - Rust
-
-Web
-
-- kotlin
-- spring
-- webflux
-
-redis
-
