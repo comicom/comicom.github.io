@@ -109,7 +109,7 @@ run()
 # Example
 https://www.acmicpc.net/step/22
 
-1. 블랙잭
+## 블랙잭
 {% highlight python %}
 from itertools import combinations
 
@@ -126,7 +126,7 @@ for card in combinations(cards, 3):
 print(output)
 {% endhighlight %}
 
-2. 분배합
+## 분배합
 {% highlight python %}
 num = int(input())
 
@@ -142,7 +142,7 @@ for n in range(num):
 print(output)
 {% endhighlight %}
 
-3. 덩치
+## 덩치
 {% highlight python %}
 N = int(input())
 people = []
@@ -164,12 +164,12 @@ for i in output:
 print(result[:-1])
 {% endhighlight %}
 
-4. 체스판 다시 칠하기
+## 체스판 다시 칠하기
 {% highlight python %}
 
 {% endhighlight %}
 
-5. 영화감독 숌
+## 영화감독 숌
 {% highlight python %}
 
 {% endhighlight %}
