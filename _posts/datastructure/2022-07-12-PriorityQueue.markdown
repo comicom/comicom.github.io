@@ -20,4 +20,5 @@ tags:
 import heapq
 
 heapq.heappush(q, (0, start))
+heapq.heappop(q)
 {% endhighlight %}
