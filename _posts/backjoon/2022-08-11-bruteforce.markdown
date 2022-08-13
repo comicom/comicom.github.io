@@ -1,18 +1,20 @@
 ---
 layout: posts
-title:  "Broot Force"
+title:  "Brute Force"
 date:   2022-08-11 12:10:28 +0900
 categories: Backjoon
 tags:
   - python
-  - brootforce
+  - brute force
 ---
 
 # Introduction
 
 **무차별 대입 공격**
 
-## product
+## intertools module
+
+### product
 {% highlight python %}
 from itertools import product
 list = product(A, repeeat=B)
@@ -22,7 +24,7 @@ A는 조합을 만들 내용 입력, B는 자릿수 입력
 * 여러 리스트들의 조합을 만들기 위해 사용
 * 문자열을 입력할 경우, 문자열 원소 하나하나를 인식하여 조합의 재료로 사용
 
-### 데카르트곱
+#### 데카르트곱
 {% highlight python %}
 from itertools import product
 
@@ -38,7 +40,7 @@ print([(i,j) for i in iterator1 for j in iterator2])
 >>> [(1, 'A'), (1, 'B'), (1, 'C'), (2, 'A'), (2, 'B'), (2, 'C'), (3, 'A'), (3, 'B'), (3, 'C')]
 {% endhighlight %}
 
-### 중복 순열(순서O, 중복O)
+#### 중복 순열(순서O, 중복O)
 {% highlight python %}
 from itertools import product
 
@@ -53,7 +55,7 @@ print(list(product(iterator, repeat = 2)))
 >>> [('A', 'A'), ('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'A'), ('B', 'B'), ('B', 'C'), ('B', 'D'), ('B', 'E'), ('C', 'A'), ('C', 'B'), ('C', 'C'), ('C', 'D'), ('C', 'E'), ('D', 'A'), ('D', 'B'), ('D', 'C'), ('D', 'D'), ('D', 'E'), ('E', 'A'), ('E', 'B'), ('E', 'C'), ('E', 'D'), ('E', 'E')]
 {% endhighlight %}
 
-## permutations (순서O, 중복X) - 순열
+### permutations (순서O, 중복X) - 순열
 {% highlight python %}
 from itertools import permutations
 
@@ -68,7 +70,7 @@ print(list(permutations(iterator, 2)))
 >>> [('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'C'), ('C', 'A'), ('C', 'B')]
 {% endhighlight %}
 
-## combinations (순서X, 중복X) - 조합
+### combinations (순서X, 중복X) - 조합
 {% highlight python %}
 from itertools import combinations
 
@@ -104,6 +106,28 @@ def run():
             print("소요시간 : " + str(time.time() - start))
 
 run()
+{% endhighlight %}
+
+## 재귀
+
+반복적인 패턴 찾아내기
+-> 점화식 찾기
+
+{% highlight python %}
+def combination(arr,r):
+
+    wanted=[]
+    
+    if r==1:
+        for i in arr:
+            wanted.append([i])
+
+    else:
+        for i in range(len(arr)-r+1):
+            for j in combination(arr[i+1:], r-1):
+                wanted.append([arr[i]]+j)
+
+    return wanted
 {% endhighlight %}
 
 # Example
