@@ -95,38 +95,30 @@ V 개의 정점을 갖는 그래프의 최대 간선의 수는 V * (V-1) / 2 (�
 
 #### 구현
 
-그래프 표현
-
 {% highlight python %}
-graph = {
-    'A': ['B'],
-    'B': ['A', 'C', 'H'],
-    'C': ['B', 'D'],
-    'D': ['C', 'E', 'G'],
-    'E': ['D', 'F'],
-    'F': ['E'],
-    'G': ['D'],
-    'H': ['B', 'I', 'J', 'M'],
-    'I': ['H'],
-    'J': ['H', 'K'],
-    'K': ['J', 'L'],
-    'L': ['K'],
-    'M': ['H']
-}
-{% endhighlight %}
+from collections import deque
+import sys
+input = sys.stdin.readline
 
-BFS 구현
+n, m, start = map(int, sys.stdin.readline().strip().split())
+ 
+edge = [[] for _ in range(n + 1)]
+ 
+for _ in range(m):
+    v1, v2 = map(int, sys.stdin.readline().strip().split())
+    edge[v1].append(v2)
+    edge[v2].append(v1)
+ 
+for e in edge:
+    e.sort()
 
-{% highlight python %}
-def bfs(graph, start_node):
-  visit = list()
-  queue = list()
-
-  queue.append(start_node)
-
+def bfs(x):
+  queue = deque([start])
+  b_check = [False for _ in range(n+1)]
+  b_check[start] = True
   while queue:
-    node = queue.pop(0)
-    if node not in visit:
+    node = queue.popleft()
+    if node not in edge:
       visit.append(node)
       queue.extend(graph[node])
   

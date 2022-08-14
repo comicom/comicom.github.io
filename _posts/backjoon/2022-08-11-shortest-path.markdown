@@ -189,3 +189,64 @@ for i in range(1, V+1):
 	else:
 		print(distance[i])
 {% endhighlight %}
+
+## 특정한 최단경로
+
+특이사항
+
+* 양방향 길 존재
+* 경로가 존재
+    * 1 -> v1 -> v2 -> N
+    * 1 -> v2 -> v1 -> N
+
+{% highlight python %}
+import heapq
+import sys
+# input = sys.stdin.readline
+INF = int(2e18)
+
+N, E = map(int,input().split())
+graph = [[] for i in range(N+1)]
+
+for _ in range(E):
+    a, b, c = map(int,input().split())
+    graph[a].append((b,c))
+    graph[b].append((a,c))
+
+v1, v2 = map(int,input().split())
+
+def dijkstra(start):
+    q = []
+    heapq.heappush(q, (0, start))
+    distance = [INF]*(N+1)
+    distance[start] = 0
+    while q:
+        dist, now = heapq.heappop(q)
+        if distance[now] < dist:
+            continue
+        for i in graph[now]:
+            cost = dist + i[1]
+            if cost < distance[i[0]]:
+                distance[i[0]] = cost
+                heapq.heappush(q, (cost, i[0]))
+    return distance
+
+# print(dijkstra(1))
+# print(dijkstra(v1))
+# print(dijkstra(v2))
+
+res_start = dijkstra(1)
+res_v1 = dijkstra(v1)
+res_v2 = dijkstra(v2)
+
+# 1 -> v1 -> v2 -> N
+# 1 -> v2 -> v1 -> N
+
+ans = min(res_start[v1] + res_v1[v2] + res_v2[N], res_start[v2] + res_v2[v1] + res_v1[N])
+
+
+if ans < INF:
+    print(ans)
+else:
+    print("-1")
+{% endhighlight %}
