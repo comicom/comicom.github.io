@@ -202,7 +202,7 @@ for i in range(1, V+1):
 {% highlight python %}
 import heapq
 import sys
-# input = sys.stdin.readline
+input = sys.stdin.readline
 INF = int(2e18)
 
 N, E = map(int,input().split())
@@ -243,7 +243,6 @@ res_v2 = dijkstra(v2)
 # 1 -> v2 -> v1 -> N
 
 ans = min(res_start[v1] + res_v1[v2] + res_v2[N], res_start[v2] + res_v2[v1] + res_v1[N])
-
 
 if ans < INF:
     print(ans)
