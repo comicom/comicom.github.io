@@ -135,7 +135,7 @@ def bfs(x):
 
 #### 구현
 
-그래프 표현
+DFS 구현 (stack)
 
 {% highlight python %}
 graph = {
@@ -153,11 +153,7 @@ graph = {
     'L': ['K'],
     'M': ['H']
 }
-{% endhighlight %}
 
-DFS 구현
-
-{% highlight python %}
 def dfs(graph, start_node):
   visit = list()
   stack = list()
@@ -171,6 +167,46 @@ def dfs(graph, start_node):
       stack.extend(graph[node])
   
   return visit
+{% endhighlight %}
+
+DFS 구현 (재귀)
+
+{% highlight python %}
+import sys
+sys.setrecursionlimit(10 ** 9)
+input = sys.stdin.readline
+
+# dfs(V, E, R) {  # V : 정점 집합, E : 간선 집합, R : 시작 정점
+#     visited[R] <- YES;  # 시작 정점 R을 방문 했다고 표시한다.
+#     for each x ∈ E(R)  # E(R) : 정점 R의 인접 정점 집합.(정점 번호를 오름차순으로 방문한다)
+#         if (visited[x] = NO) then dfs(V, E, x);
+# }
+
+N, M, R = map(int, input().split())
+graph = [[] for i in range(N+1)]
+
+for _ in range(M):
+    u, v = map(int, input().split())
+    graph[u].append(v)
+    graph[v].append(u)
+
+for g in graph:
+    g.sort()
+
+visit = [0]*(N+1)
+cnt =  1
+def dfs(R):
+    global cnt
+    visit[R] = cnt
+    for x in graph[R]:
+        if visit[x] == 0:
+            cnt+=1
+            dfs(x)
+
+dfs(R)
+
+for i in range(1,N+1):
+    print(visit[i])
 {% endhighlight %}
 
 # Example
