@@ -1,0 +1,88 @@
+---
+layout: posts
+title:  "Sort"
+date:   2022-08-16 12:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - sort
+---
+
+# Introduction
+
+정렬의 종류
+
+## python list 내장 함수
+
+### sort
+시간복잡도: O(nlogn)
+
+{% highlight python %}
+res = ['5', '7', '4', '6', '8']
+res.sort()
+# ['4', '5', '6', '7', '8']
+
+res = ['5', '7', '4', '6', '8']
+res.sort(reverse=True)
+# ['8', '7', '6', '5', '4']
+{% endhighlight %}
+
+### sorted
+
+## 버블 정렬
+시간복잡도: O(n²)
+
+아래는 오름차순으로 정렬되도록하는 버블정렬을 파이썬으로 구현한 내용이다.
+{% highlight python %}
+import sys
+# input = sys.stdin.readline
+
+N = int(input())
+res = []
+for _ in range(N):
+    res.append(int(input()))
+
+def bubble_sort(lists) -> list:
+  n = len(lists)
+  result = lists
+  for i in range(0, n):
+    for j in range(n-1, i, -1):
+      if result[j-1] > result[j]:
+        result[j-1], result[j] = result[j], result[j-1]
+  return result
+
+output = bubble_sort(res)
+
+for o in output:
+    print(o)
+{% endhighlight %}
+## 삽입 정렬
+## 병합 정렬
+## 힙 정렬
+## 카운팅 정렬
+## 안정 정렬
+
+# Example
+https://www.acmicpc.net/step/9
+
+## 수 정렬하기
+
+## 수 정렬하기 2
+
+## 수 정렬하기 3
+
+## 커트라인
+
+## 통계학
+
+## 소트인사이드
+
+## 좌표 정렬하기
+
+## 좌표 정렬하기 2
+
+## 단어 정렬
+
+## 나이순 정렬
+
+## 좌표 압축
