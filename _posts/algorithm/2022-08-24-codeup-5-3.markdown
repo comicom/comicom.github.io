@@ -1,0 +1,29 @@
+---
+layout: posts
+title:  "코드업 5-3"
+date:   2022-08-24 13:10:28 +0900
+categories: algorithm
+tags:
+  - python
+  - algorithm
+---
+
+# Introduction
+
+https://codeup.kr/problemsetsol.php?psid=32
+
+## [기초-배열연습] 2차원 배열 지그재그 채우기 2-5
+
+## [기초-배열연습] 2차원 배열 달팽이 채우기 4-1
+
+## [기초-배열연습] 2차원 차이 배열 만들기 5-4
+
+## [기초-배열연습] 여러 개씩 묶어 작은 값 골라 배열 만들기 5-7
+
+## 생명 게임 1
+
+## 생명 게임 2
+
+## 지뢰 찾기 1
+
+## 크레이지 아케이드
