@@ -229,3 +229,47 @@ print(result)
 {% endhighlight %}
 
 ## [기초-리스트] 성실한 개미(py)
+
+10*10 크기의 미로 상자의 구조와 먹이의 위치가 입력된다.
+
+성실한 개미가 이동한 경로를 9로 표시해 출력한다.
+
+{% highlight python %}
+# 미로 초기값
+miro = []
+for _ in range(0,10):
+  miro.append(list(map(int, input().split())))
+
+ant_state = [1,1]
+# move ant
+while True:
+  x = ant_state[1]
+  y = ant_state[0]
+
+  miro[x][y] = 9
+  
+  if ant_state[0] == 9 and ant_state[1] == 9:
+    break
+
+  if miro[x][y+1] == 0:
+    ant_state[0] += 1
+  elif miro[x][y+1] == 2:
+    miro[x][y+1] = 9
+    break
+  elif miro[x][y+1] == 1:
+    if miro[x+1][y] == 1:
+      break
+    elif miro[x+1][y] == 2:
+      miro[x+1][y] = 9
+      break
+    ant_state[1] += 1
+
+# 결과 출력
+result = ""
+for i in range(0,10):
+    for j in range(0,10):
+        result = result + str(miro[i][j]) + " "
+    result = result[:-1] + "\n"
+
+print(result)
+{% endhighlight %}
