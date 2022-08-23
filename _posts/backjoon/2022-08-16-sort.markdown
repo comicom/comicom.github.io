@@ -27,6 +27,21 @@ res.sort(reverse=True)
 # ['8', '7', '6', '5', '4']
 {% endhighlight %}
 
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+res = []
+for _ in range(N):
+    res.append(int(input()))
+
+res.sort()
+
+for o in output:
+    print(o)
+{% endhighlight %}
+
 ### sorted
 
 ## 버블 정렬
@@ -39,6 +54,7 @@ res.sort(reverse=True)
 * Worst: O(n²)
 
 아래는 오름차순으로 정렬되도록하는 버블정렬을 파이썬으로 구현한 내용이다.
+
 {% highlight python %}
 import sys
 input = sys.stdin.readline
@@ -62,6 +78,7 @@ output = bubble_sort(res)
 for o in output:
     print(o)
 {% endhighlight %}
+
 ## 선택 정렬
 
 정렬되지 않은 숫자 배열 중 최소값을 선택해 왼쪽 끝에 추가하는 정렬 알고리즘이다.
@@ -145,6 +162,21 @@ for o in output:
 https://www.acmicpc.net/step/9
 
 ## 수 정렬하기
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+res = []
+for _ in range(N):
+    res.append(int(input()))
+
+res.sort()
+
+for o in output:
+    print(o)
+{% endhighlight %}
 
 ## 수 정렬하기 2
 
