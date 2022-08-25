@@ -1,6 +1,6 @@
 ---
 layout: posts
-title:  "Data structure"
+title:  "Backjoon Algorithm 1-1: Data structure"
 date:   2022-08-11 23:10:28 +0900
 categories: Backjoon
 tags:
