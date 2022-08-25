@@ -1,7 +1,7 @@
 ---
 layout: posts
 title:  "How to Reduce Docekr Image Size"
-date:   2022-07-08 12:10:28 +0900
+date:   2022-07-25 12:10:28 +0900
 categories: docker
 tags:
   - docker
