@@ -149,4 +149,9 @@ CMD ["pip", "freeze"]
 {% endhighlight %}
 
 ## .dockerignore 활용하기
-docker build시 명령어 COPY등을 통해서 프로젝트 파일을 컨테이너로 복사할 때 폭더, 파일등을 배제 하는 역할
+docker build시 명령어 COPY등을 통해서 프로젝트 파일을 컨테이너로 복사할 때 폭더, 파일등을 배제 하는 역할.
+.gitignore과 비슷하게 사용
+{% highlight %}
+./{folder_name}/
+./{file_name}
+{% endhighlight %}
