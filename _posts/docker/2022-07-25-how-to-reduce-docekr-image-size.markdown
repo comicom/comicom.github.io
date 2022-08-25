@@ -19,7 +19,7 @@ Dockerfile에서 RUN명령을 개별로 실행시 실행이 끝날때마다 중�
 
 개별 실행 예제
 
-{% highlight %}
+{% highlight shell %}
 RUN wget -nv
 RUN tar -xvf someutility-v1.0.0.tar.gz
 RUN mv /tmp/someutility-v1.0.0/someutil /usr/bin/someutil
@@ -27,7 +27,7 @@ RUN mv /tmp/someutility-v1.0.0/someutil /usr/bin/someutil
 
 체인 실행 예제
 
-{% highlight %}
+{% highlight shell %}
 RUN wget -nv \
 tar -xvf someutility-v1.0.0.tar.gz \
 mv /tmp/someutility-v1.0.0/someutil /usr/bin/someutil
@@ -39,7 +39,7 @@ apt-get을 실행 했다면, apt-get clean을 넣어주고, --no-install-recomme
 /var/cache/apt/archives 디렉토리에 있는 다운로드 파일을 지워줌
 /var/lib/pat/lists 디렉토리를 지워 패키지 리스트 파일도 지워줌
 
-{% highlight %}
+{% highlight shell %}
 RUN apt-get update && apt-get install -y \
     aufs-tools \
     automake \
@@ -62,7 +62,7 @@ curl을 통한 파일다운로드시 필요한 파일을 설치한 후 삭제
 시점은 Docker명령어에수 수행해야하며 체인을 사용해야지만 최종이미지에 포함되지 않는다.
 만약 개별로 수행시 각 RUN마다 레이어가 생겨서 file.zip이 포함된다.
 
-{% highlight %}
+{% highlight shell %}
 RUN curl http://xx.xxx.com/file.zip \
 RUN tar xvzf file.zip \
 RUN rm file.zip
@@ -73,10 +73,10 @@ RUN rm file.zip
 --no-trunc: 명령어, 설명을 ...으로 표시하지 않고 전체를 보여준다.
 각 layer마다 사용된 용량이 표시된다.
 
-{% highlight %}
+{% highlight shell %}
 docker history gcr.io/kfserving/pytorchserver:0.3.0 --no-trunc
 {% endhighlight %}
-{% highlight %}
+{% highlight shell %}
 IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
 2e560760b2db        6 months ago        /bin/sh -c #(nop) ENTRYPOINT &{["/run.sh"]}     0 B                 
 <missing>           6 months ago        /bin/sh -c #(nop) COPY file:6d7449b1aeffb25aa   1.602 kB            
@@ -93,7 +93,7 @@ ADD, COPY는 기능을 포함하면서도, HTTP로 파일을 다운로드하거�
 하지만, curl, wget을 사용하는 것이 좋다.
 이유 : ADD를 통해 압축파일을 다운받고, 압축파일을 지워야 하는데 체인으로 처리 할수 없다.
 
-{% highlight %}
+{% highlight shell %}
 ADD http://xx.xxx.com/file.tar.gz
 RUN tar zvxf file.tar.gz
 RUN rm file.tar.gz
@@ -101,7 +101,7 @@ RUN rm file.tar.gz
 
 ADD대신 RUN을 사용
 
-{% highlight %}
+{% highlight shell %}
 RUN wget http://xx.xxx.com/file.zip \
     tar xvzf filr.tar.gz \
     rm file.tar.gz
@@ -110,12 +110,12 @@ RUN wget http://xx.xxx.com/file.zip \
 ADD를 상용하기에 적합한 케이스
 
 로컬 압축파일을 압축을 해제할때,
-{% highlight %}
+{% highlight shell %}
 ADD file.tar.gz ./
 {% endhighlight %}
 
 만약 copy와 run을 사용하게 되면, 불필요한 layer를 생성하게 된다.
-{% highlight %}
+{% highlight shell %}
 COPY file.tar.gz ./
 RUN tar xvzf file.tar.gz
 {% endhighlight %}
@@ -128,7 +128,7 @@ Dockerfile 1개에 FROM 구문을 여러 개 두는 방식
 Pipfile에는 uwgi라는 패키지의 의존성을 명시하고 있고, 이 패키지를 위해서는 gcc가 필요하기때문에 apt-get install gcc를 실행 해야함
 여기서, gcc는 uwgi설치에만 관여하고, 실제 애플리케이션 실행환경에는 필요 하지 않기때문에 멀티-스테이지 빌드를 사용할 수 있음
 
-{% highlight %}
+{% highlight shell %}
 COPY --from=builder: 전 단계 스테이지 빌드에서 생성된 특정 결과물만 새로운 BASE이미지로 복사해서 이미지를 생성
 FROM python:3.8-slim-buster AS builder
 
@@ -149,9 +149,30 @@ CMD ["pip", "freeze"]
 {% endhighlight %}
 
 ## .dockerignore 활용하기
+https://docs.docker.com/engine/reference/builder/#dockerignore-file
+
 docker build시 명령어 COPY등을 통해서 프로젝트 파일을 컨테이너로 복사할 때 폭더, 파일등을 배제 하는 역할.
 .gitignore과 비슷하게 사용
-{% highlight %}
+{% highlight shell %}
 ./{folder_name}/
 ./{file_name}
 {% endhighlight %}
+
+The following is an example of specifying a file named target in any directory one level below the build context root.
+{% highlight shell %}
+*/target
+{% endhighlight %}
+
+On the other hand, if you want to specify a specific file name, not just a file hierarchy, use `**`.
+{% highlight shell %}
+**/target
+{% endhighlight %}
+
+The following also excludes files whose names are extended by one character from target. For example, target1 and targetA are excluded.
+{% highlight shell %}
+target?
+{% endhighlight %}
+
+note.
+
+** When using the BuildKit backend, docker build searches for a .dockerignore file relative to the Dockerfile name. For example, running `docker build -f myapp.Dockerfile .` will first look for an ignore file named `myapp.Dockerfile.dockerignore` **
