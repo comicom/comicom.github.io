@@ -5,7 +5,8 @@ date:   2022-08-25 15:10:28 +0900
 categories: Backjoon
 tags:
   - python
-  - sort
+  - algorithm
+  - math
 ---
 
 # Introduction
