@@ -105,11 +105,11 @@ author:
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I am an **amazing** person."
   location         : "South Korea"
-  email            :
+  email            : "kjsong1028@gmail.com"
   links:
-    - label: "Email"
+    - label: "youtube"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
+      url: "https://www.youtube.com/channel/UCMG7gnRpQ0wfuDJpITNBj4A"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://comicom.github.io/"
@@ -129,6 +129,9 @@ author:
 # Site Footer
 footer:
   links:
+    - label: "youtube"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://www.youtube.com/channel/UCMG7gnRpQ0wfuDJpITNBj4A"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       # url:
