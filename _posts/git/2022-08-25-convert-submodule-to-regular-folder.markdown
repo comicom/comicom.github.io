@@ -1,7 +1,7 @@
 ---
 layout: posts
 title:  "How to convert submodule to regular folder"
-date:   2022-08-13 12:10:28 +0900
+date:   2022-08-25 14:10:28 +0900
 categories: git
 tags:
   - git
