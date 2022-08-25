@@ -20,6 +20,7 @@ Clone 할 로컬 저장소 생성
 {% highlight shell %}
   git config core.sparseCheckout true
 {% endhighlight %}
+
 다운로드 할 원격 저장소 주소 설정
 
 {% highlight shell %}
