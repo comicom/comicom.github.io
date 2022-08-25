@@ -247,9 +247,6 @@ while True:
   y = ant_state[0]
 
   miro[x][y] = 9
-  
-  if ant_state[0] == 9 and ant_state[1] == 9:
-    break
 
   if miro[x][y+1] == 0:
     ant_state[0] += 1
