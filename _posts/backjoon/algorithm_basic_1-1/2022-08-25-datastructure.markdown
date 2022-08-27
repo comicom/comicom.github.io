@@ -95,6 +95,54 @@ https://www.acmicpc.net/problem/9012
 
 https://www.acmicpc.net/problem/1874
 
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+
+arr = []
+for _ in range(n):
+    num = int(input())
+    arr.append(num)
+
+# push를 진행할 때는 반드시 1, 2, 3, ... 순서대로 진행해야 한다.
+# * 1, 4 이런식으로 진행 X
+
+cnt = 1
+arr_dummy = []
+arr_test = []
+result = []
+for arr_num in arr:
+    if len(arr_dummy) > 0:
+        if arr_dummy[-1] == arr_num:
+            arr_test.append(arr_dummy.pop())
+            result.append("-")
+        elif arr_dummy[-1] != arr_num:
+            if arr_num not in arr_dummy and arr_num < arr_dummy[-1] or cnt > arr_num+1:
+                break
+            else:
+                for i in range(cnt,arr_num+1):
+                    arr_dummy.append(i)
+                    result.append("+")
+                arr_test.append(arr_dummy.pop())
+                result.append("-")
+                cnt = arr_num+1
+    else:
+        for i in range(cnt,arr_num+1):
+            arr_dummy.append(i)
+            result.append("+")
+        arr_test.append(arr_dummy.pop())
+        result.append("-")
+        cnt = arr_num+1
+
+if len(arr_test) == len(arr):
+    for r in result:
+        print(r)
+else:
+    print("NO")
+{% endhighlight %}
+
 ### 에디터
 
 ### 큐
