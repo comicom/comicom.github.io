@@ -147,6 +147,8 @@ else:
 
 ### 큐
 
+https://www.acmicpc.net/problem/10845
+
 stack은 FIFO(Firts Input First Out)구조이다.
 따라서 pop 할 때 첫 번째 인덱스에 있는 값이 출력되어야 한다.
 

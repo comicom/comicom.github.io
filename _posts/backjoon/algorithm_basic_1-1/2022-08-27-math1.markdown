@@ -19,6 +19,8 @@ pass
 
 ### 최대공약수와 최소공배수
 
+https://www.acmicpc.net/problem/2609
+
 * 최대공약수: 0이 아닌 두 개 이상의 정수의 공통되는 약수
     - 유클리드 호제법 사용: 2개의 자연수 a, b(a>b)에 대해서 a를 b로 나눈 나머지가 r일 때, a와 b의 최대공약수는 b와 r의 최대공약수와 같다.
 {% highlight python %}
@@ -81,6 +83,8 @@ print(int(big*small/gcd))
 
 ### 소수 찾기
 
+https://www.acmicpc.net/problem/1978
+
 {% highlight python %}
 import sys
 input = sys.stdin.readline
@@ -107,6 +111,98 @@ print(cnt)
 ### 소수 구하기
 
 ### 골드바흐의 추측
+
+https://www.acmicpc.net/problem/6588
+
+#### 첫번째 시도
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+# 입력
+numbers = []
+N = int(input())
+while N!=0:
+    numbers.append(N)
+    N = int(input())
+
+# 소수 리스트 생성
+lists = []
+for n in range(3,max(numbers)):
+    for i in range(3,n):
+        if n%i == 0:
+            break
+    else:
+        lists.append(n)
+
+# 계산
+result = {}
+for num in numbers:
+    # num 값에 맞는 소수 리스트 가져오기
+    dummy_list = []
+    if num != max(numbers):
+        cnt = 0
+        for i in range(len(lists)):
+            if lists[i]>num:
+                cnt=i
+                break
+        dummy_list = lists[:cnt]
+    else:
+        dummy_list = lists[:]
+    
+    # num 값에 맞는 소수 리스트 출력
+    result[num] = [-1,-1]
+    findFlag = False
+    for big in range(len(dummy_list)-1,-1,-1):
+        for small in range(0,len(dummy_list)):
+            if num == dummy_list[big]+dummy_list[small]:
+                result[num] = [dummy_list[small],dummy_list[big]]
+                findFlag = True
+                break
+            elif num < dummy_list[big]+dummy_list[small]:
+                break
+        if findFlag == True:
+            break
+
+# 출력
+for num in numbers:
+    if result[num][0]!=-1 and result[num][1]!=-1:
+        print("{0} = {1} + {2}".format(num,result[num][0],result[num][1]))
+    else:
+        print("Goldbach's conjecture is wrong.")
+{% endhighlight %}
+
+#### 에라토스테네스의 체
+
+에라토스테네스의 체는 N보다 작거나 같은 모든 소수를 찾는 유명한 알고리즘이다.
+
+이 알고리즘은 다음과 같다.
+
+* 2부터 N까지 모든 정수를 적는다.
+* 아직 지우지 않은 수 중 가장 작은 수를 찾는다. 이것을 P라고 하고, 이 수는 소수이다.
+* P를 지우고, 아직 지우지 않은 P의 배수를 크기 순서대로 지운다.
+* 아직 모든 수를 지우지 않았다면, 다시 2번 단계로 간다.
+
+{% highlight python %}
+import math
+
+# 소수 판별 함수(에라토스테네스의 체)
+def is_prime_number(n):
+    # 2부터 n까지의 모든 수에 대하여 소수 판별
+    array = [True for i in range(n+1)] # 처음엔 모든 수가 소수(True)인 것으로 초기화(0과 1은 제외)
+
+    # 에라토스테네스의 체
+    for i in range(2, int(math.sqrt(n)) + 1): #2부터 n의 제곱근까지의 모든 수를 확인하며
+        if array[i] == True: # i가 소수인 경우(남은 수인 경우)
+            # i를 제외한 i의 모든 배수를 지우기
+            j = 2
+            while i * j <= n:
+                array[i * j] = False
+                j += 1
+
+    return [ i for i in range(2, n+1) if array[i] ]
+{% endhighlight %}
 
 ### 팩토리얼
 
