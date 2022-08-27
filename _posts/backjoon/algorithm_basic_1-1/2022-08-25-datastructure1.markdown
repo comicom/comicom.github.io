@@ -16,7 +16,7 @@ tags:
 https://www.acmicpc.net/problem/10828
 
 stack은 LIFO(Last Input First Out)구조이다.
-따라서 pop 할 때 나중에 append 된 항목이 출력되어야 한다. 
+따라서 pop 할 때 append 된 항목이 출력되어야 한다. 
 
 {% highlight python %}
 import sys

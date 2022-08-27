@@ -15,17 +15,102 @@ tags:
 
 ### 나머지
 
+pass
+
 ### 최대공약수와 최소공배수
+
+* 최대공약수: 0이 아닌 두 개 이상의 정수의 공통되는 약수
+    - 유클리드 호제법 사용: 2개의 자연수 a, b(a>b)에 대해서 a를 b로 나눈 나머지가 r일 때, a와 b의 최대공약수는 b와 r의 최대공약수와 같다.
+{% highlight python %}
+a = 24
+b = 18
+
+r = a%b
+while r != 0:
+  big = b
+  small = r
+  r = big%small
+print(small)
+>> 6
+{% endhighlight %}
+
+* 최소공배수: 2개 이상의 수의 공배수 중 가장 최소인 값을 소인수분해하여 각 수 중 어느 한 곳에라도 있는 약수를 찾아 곱해준 값
+    - a와 b의 최소공배수는 a와 b의 곱을 a와 b의 최대공약수를 나눈것과 같다.
+{% highlight python %}
+a = 24
+b = 18
+
+r = a%b
+while r != 0:
+  big = b
+  small = r
+  r = big%small
+print(int(a*b/small))
+>> 72
+{% endhighlight %}
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+num1, num2 = map(int,input().split())
+
+def GCD(b, s):
+    big = b
+    small = s
+    r = big%small
+    while r!=0:
+        big = small
+        small = r
+        r = big%small
+    return small
+
+if (num1>num2):
+    big = num1
+    small = num2
+else:
+    big = num2
+    small = num1
+
+gcd = GCD(big,small)
+print(gcd)
+print(int(big*small/gcd))
+{% endhighlight %}
 
 ### 최소공배수
 
 ### 소수 찾기
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+numbers = list(map(int,input().split()))
+
+lists = []
+
+for n in range(2, 1001):
+    for i in range(2, n):
+        if n % i == 0:
+            break
+    else:
+        lists.append(n)
+
+cnt = 0
+for num in numbers:
+    if num in lists:
+        cnt += 1
+print(cnt)
+{% endhighlight %}
 
 ### 소수 구하기
 
 ### 골드바흐의 추측
 
 ### 팩토리얼
+
+pass
 
 ### 팩토리얼 0의 개수
 
