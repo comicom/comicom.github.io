@@ -5,6 +5,7 @@ date:   2022-08-16 12:10:28 +0900
 categories: Backjoon
 tags:
   - python
+  - algorithm
   - sort
 ---
 
@@ -184,15 +185,121 @@ for o in output:
 
 ## 커트라인
 
+https://www.acmicpc.net/problem/25305
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N, k = map(int,input().split())
+scores = list(map(int,input().split()))
+
+scores.sort()
+print(scores[N-k])
+{% endhighlight %}
+
 ## 통계학
 
 ## 소트인사이드
 
+https://www.acmicpc.net/problem/1427
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+string = input()
+
+lists = []
+for s in string:
+    lists.append(s)
+
+result = sorted(lists, reverse=True)
+for r in result:
+    print(r,end='')
+{% endhighlight %}
+
 ## 좌표 정렬하기
+
+https://www.acmicpc.net/problem/11650
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+lists = []
+for _ in range(N):
+    x, y = map(int,input().split())
+    lists.append((x,y))
+
+result = sorted(lists, key=lambda x:(x[0], x[1]))
+for r in result:
+    print("{0} {1}".format(r[0],r[1]))
+{% endhighlight %}
 
 ## 좌표 정렬하기 2
 
+https://www.acmicpc.net/problem/11651
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+lists = []
+for _ in range(N):
+    x, y = map(int,input().split())
+    lists.append((x,y))
+
+result = sorted(lists, key=lambda x:(x[1],x[0]))
+for r in result:
+    print("{0} {1}".format(r[0],r[1]))
+{% endhighlight %}
+
 ## 단어 정렬
+
+**주의**
+
+sys.stdin.readline()은 개행문자까지 입력에 받는다.
+따라서, 스트링을 입력받을 때는 .rstrip()을 사용하는게 좋다
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+lists = []
+for _ in range(N):
+    string = input().rstrip("\n")
+    if string not in lists:
+        lists.append(string)
+
+result = sorted(lists, key=lambda x:(len(x),x))
+
+for r in result:
+    print(r)
+{% endhighlight %}
+
+{% highlight python %}
+import sys
+
+N = int(input())
+
+lists = []
+for _ in range(N):
+    string = input()
+    if string not in lists:
+        lists.append(string)
+
+result = sorted(lists, key=lambda x:(len(x),x))
+
+for r in result:
+    print(r)
+{% endhighlight %}
 
 ## 나이순 정렬
 
