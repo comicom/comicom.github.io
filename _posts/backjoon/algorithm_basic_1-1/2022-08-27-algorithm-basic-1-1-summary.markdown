@@ -1,7 +1,7 @@
 ---
 layout: posts
 title:  "Backjoon Algorithm 1-1: Summary"
-date:   2022-08-27 20:10:28 +0900
+date:   2022-08-27 17:10:28 +0900
 categories: Backjoon
 tags:
   - python
