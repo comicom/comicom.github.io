@@ -1,0 +1,56 @@
+---
+layout: posts
+title:  "Backjoon Algorithm 1-1: Math1"
+date:   2022-08-27 23:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - algorithm
+  - math
+---
+
+# Introduction
+
+## Basic
+
+### 나머지
+
+### 최대공약수와 최소공배수
+
+### 최소공배수
+
+### 소수 찾기
+
+### 소수 구하기
+
+### 골드바흐의 추측
+
+### 팩토리얼
+
+### 팩토리얼 0의 개수
+
+### 조합 0의 개수
+
+## Practice
+
+### GCD 합
+
+### 숨바꼭질 6
+
+### 2진수 8진수
+
+### 8진수 2진수
+
+### -2진수
+
+### 골드바흐 파티션
+
+## Plus
+
+### 진법 변환 2
+
+### 진법 변환
+
+### Base Conversion
+
+### 소인수 분해
