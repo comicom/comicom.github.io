@@ -10,3 +10,66 @@ tags:
 ---
 
 # Introduction
+
+## 직사각형에서 탈출
+
+https://www.acmicpc.net/problem/1085
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+x, y, w, h = map(int,input().split())
+
+print(min(min(x,w-x),min(y,h-y)))
+{% endhighlight %}
+
+## Hashing
+
+https://www.acmicpc.net/problem/15829
+
+50점
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+L = int(input())
+
+string = input().rstrip("\n")
+
+r = 31
+m = 1234567891
+
+H = 0
+for i in range(len(string)):
+    H = H + (ord(string[i])-96)*r**i
+
+print(H)
+{% endhighlight %}
+
+## 팰린드롬수
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+lists = []
+string = input().rstrip("\n")
+lists.append(string)
+while string != '0':
+    string = input().rstrip("\n")
+    lists.append(string)
+
+lists = lists[:-1]
+result = ['']*len(lists)
+for i in range(len(lists)):
+    result[i] = "yes"
+    for j in range(0,len(lists[i])//2):
+        if lists[i][j] != lists[i][-j-1]:
+            result[i] = "no"
+            break
+
+for r in result:
+    print(r)
+{% endhighlight %}
