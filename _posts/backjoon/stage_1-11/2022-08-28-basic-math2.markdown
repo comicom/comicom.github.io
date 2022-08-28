@@ -1,0 +1,103 @@
+---
+layout: posts
+title:  "Basic Math 2"
+date:   2022-08-28 22:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - algorithm
+  - math
+---
+
+# Introduction
+
+소수와 기하를 다뤄 봅시다.
+
+# Example
+https://www.acmicpc.net/step/8
+
+## 소수
+
+2부터 X-1까지 모두 나눠서 X가 소수인지 판별하는 문제 2
+
+주의) 안 될때는 부등호 범위가 틀렸는지 확인해보자
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+M = int(input())
+
+lists = []
+for n in range(2, M+1):
+    for i in range(2, n):
+        if n%i == 0:
+            break
+    else:
+        lists.append(n)
+
+result = []
+for i in range(len(lists)):
+    if N <= lists[i]:
+        result = lists[i:]
+        break
+
+if result:
+    print(sum(result))
+    print(result[0])
+else:
+    print(-1)
+{% endhighlight %}
+
+## 소인수분해
+
+N을 소인수분해하는 문제
+
+## 소수구하기
+
+더 빠르게 소수를 판별하는 문제
+
+{% highlight python %}
+import sys
+import math
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+
+lists = []
+
+def is_prime_number(n):
+    # 2부터 n까지의 모든 수에 대하여 소수 판별
+    array = [True for i in range(n+1)] # 처음엔 모든 수가 소수(True)인 것으로 초기화(0과 1은 제외)
+
+    # 에라토스테네스의 체
+    for i in range(2, int(math.sqrt(n)) + 1): #2부터 n의 제곱근까지의 모든 수를 확인하며
+        if array[i] == True: # i가 소수인 경우(남은 수인 경우)
+            # i를 제외한 i의 모든 배수를 지우기
+            j = 2
+            while i * j <= n:
+                array[i * j] = False
+                j += 1
+
+    return [ i for i in range(2, n+1) if array[i] ]
+
+lists = is_prime_number(M)
+
+result = []
+for i in range(len(lists)):
+    if N <= lists[i]:
+        result = lists[i:]
+        break
+
+for r in result:
+    print(r)
+{% endhighlight %}
+
+## 베르트랑 공준
+
+소수 응용 문제 1
+
+## 골드바흐의 추측
+
+소수 응용 문제 2

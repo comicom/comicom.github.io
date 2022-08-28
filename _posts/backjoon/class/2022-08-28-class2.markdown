@@ -73,3 +73,59 @@ for i in range(len(lists)):
 for r in result:
     print(r)
 {% endhighlight %}
+
+
+## 나이순 정렬
+
+https://www.acmicpc.net/problem/10814
+
+나이를 입력받고 intager로 변환하지 않으면 잘못 정렬 될 수 있다.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+member = {}
+age_list = []
+for _ in range(N):
+    age, name = input().split()
+    if age not in member.keys():
+        member[age] = [name]
+        age_list.append(int(age))
+    else:
+        member[age].append(name)
+
+age_list.sort()
+for a in age_list:
+    for m in member[str(a)]:
+        print("{} {}".format(a,m))
+{% endhighlight %}
+
+## 나무 자르기
+
+https://www.acmicpc.net/problem/2805
+
+시간초과
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+lists = list(map(int,input().split()))
+
+maximum = max(lists)
+
+result = 0
+for m in range(maximum-1,-1,-1):
+    cut = []
+    for l in lists:
+        cut.append(max(l-m,0))
+    S = sum(cut)
+    if S >= M:
+        result = m
+        break
+print(result)
+{% endhighlight %}
