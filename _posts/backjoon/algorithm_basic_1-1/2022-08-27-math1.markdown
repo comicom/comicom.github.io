@@ -210,6 +210,30 @@ pass
 
 ### 팩토리얼 0의 개수
 
+N!에서 뒤에서부터 처음 0이 아닌 숫자가 나올 때까지 0의 개수를 구하는 프로그램을 작성하시오.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+# 값 초기화
+N = int(input())
+
+if N == 0:
+    print(0)
+else:
+    pactorial = 1
+    for i in range(1,N+1):
+        pactorial*=i
+    cnt = 0
+    s = str(pactorial)
+    for i in range(len(s)-1,-1,-1):
+        if s[i] != '0':
+            break
+        cnt += 1
+    print(cnt)
+{% endhighlight %}
+
 ### 조합 0의 개수
 
 ## Practice

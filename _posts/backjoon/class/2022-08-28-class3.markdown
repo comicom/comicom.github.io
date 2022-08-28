@@ -1,0 +1,38 @@
+---
+layout: posts
+title:  "solved.ac: CLASS 3"
+date:   2022-08-28 04:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - algorithm
+  - solved.ac
+---
+
+# Introduction
+
+## 듣보잡
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+
+n_named = set()
+for _ in range(N):
+    name = input().rstrip()
+    n_named.add(name)
+
+m_named = set()
+for _ in range(M):
+    name = input().rstrip()
+    m_named.add(name)
+
+lists = list(n_named&m_named)
+result = sorted(lists)
+
+print(len(result))
+for r in result:
+    print(r)
+{% endhighlight %}
