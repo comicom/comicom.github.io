@@ -213,12 +213,21 @@ for i in range(1,N+1):
 # Example
 https://www.acmicpc.net/step/24
 
+주의) 파이썬의 기본 재귀 깊이 제한은 1000이므로 재귀문제를 활용할 때 아래와 같이 설정을 해두어야 에러메시지가 발생하지 않는다.
+
+{% highlight python %}
+import sys
+sys.setrecursionlimit(10 ** 6)
+{% endhighlight %}
+
 ## 알고리즘 수업 - 깊이 우선 탐색 1
 
 특이사항
 
 * 무방향 그래프
+* 깊이 우선 탐색
 * M개 줄에 간선 정보 u v가 주어지며 정점 u와 정점 v의 가중치 1인 양방향 간선
+* 인접 정점은 오름차순으로 방문
 
 {% highlight python %}
 import sys
@@ -260,13 +269,239 @@ for i in range(1,N+1):
 
 ## 알고리즘 수업 - 깊이 우선 탐색 2
 
+특이사항
+
+* 무방향 그래프
+* 깊이 우선 탐색
+* M개 줄에 간선 정보 u v가 주어지며 정점 u와 정점 v의 가중치 1인 양방향 간선
+* 인접 정점은 내림차순으로 방문
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+sys.setrecursionlimit(10**6)
+
+N, M, R = map(int,input().split())
+
+graph = [[] for _ in range(N+1)]
+for _ in range(M):
+    u, v = map(int,input().split())
+    graph[u].append(v)
+    graph[v].append(u)
+
+for g in graph:
+    g.sort(reverse=True)
+
+visited = [0]*(N+1)
+cnt = 1
+def dfs(R):
+    global cnt
+    visited[R] = cnt
+    for x in graph[R]:
+        if visited[x] == 0:
+            cnt += 1
+            dfs(x)
+dfs(R)
+
+for i in range(1,len(visited)):
+    print(visited[i])
+{% endhighlight %}
+
 ## 알고리즘 수업 - 너비 우선 탐색 1
+
+특이사항
+
+* 무방향 그래프
+* 너비 우선 탐색
+* M개 줄에 간선 정보 u v가 주어지며 정점 u와 정점 v의 가중치 1인 양방향 간선
+* 인접 정점은 오름차순으로 방문
+
+{% highlight python %}
+import sys
+from collections import deque
+sys.setrecursionlimit(10**6)
+input = sys.stdin.readline
+
+N, M, R = map(int,input().split())
+
+graph = [[] for _ in range(N+1)]
+
+for _ in range(M):
+    u, v = map(int,input().split())
+    graph[u].append(v)
+    graph[v].append(u)
+
+for g in graph:
+    g.sort()
+
+cnt = 1
+def dfs(R):
+    global cnt
+    visited = [0]*(N+1)
+    visited[R] = cnt
+    queue = deque([R])
+    while queue:
+        u = queue.popleft()
+        for v in graph[u]:
+            if visited[v] == 0:
+                cnt += 1
+                visited[v] = cnt
+                queue.extend([v])
+    return visited
+
+visited = dfs(R)
+
+for i in range(1,len(visited)):
+    print(visited[i])
+{% endhighlight %}
 
 ## 알고리즘 수업 - 너비 우선 탐색 2
 
+특이사항
+
+* 무방향 그래프
+* 너비 우선 탐색
+* M개 줄에 간선 정보 u v가 주어지며 정점 u와 정점 v의 가중치 1인 양방향 간선
+* 인접 정점은 내림차순으로 방문
+
+{% highlight python %}
+import sys
+from collections import deque
+sys.setrecursionlimit(10**6)
+input = sys.stdin.readline
+
+N, M, R = map(int, input().split())
+
+graph = [[] for _ in range(N+1)]
+for _ in range(M):
+    u, v = map(int, input().split())
+    graph[u].append(v)
+    graph[v].append(u)
+
+for g in graph:
+    g.sort(reverse=True)
+
+cnt = 1
+def bfs(R):
+    global cnt
+    visit = [0]*(N+1)
+    visit[R] = cnt
+    queue = deque([R])
+    while queue:
+        u = queue.popleft()
+        for v in graph[u]:
+            if visit[v] == 0:
+                cnt += 1
+                visit[v] = cnt
+                queue.extend([v])
+    return visit
+
+visit = bfs(R)
+
+for i in range(1,len(visit)):
+    print(visit[i])
+{% endhighlight %}
+
 ## 바이러스
 
+{% highlight python %}
+import sys
+from collections import deque
+sys.setrecursionlimit(10**6)
+input =  sys.stdin.readline
+
+N = int(input())
+M = int(input())
+
+graph = [[] for _ in range(N+1)]
+for _ in range(M):
+    u, v = map(int,input().split())
+    graph[u].append(v)
+    graph[v].append(u)
+
+cnt = 1
+def search(R):
+    global cnt
+    visit = [0]*(N+1)
+    visit[R] = cnt
+    queue = deque([R])
+    while queue:
+        u = queue.popleft()
+        for v in graph[u]:
+            if visit[v] == 0:
+                cnt += 1
+                visit[v] = cnt
+                queue.extend([v])
+    return visit
+
+visit = search(1)
+
+result = -1
+for v in visit:
+    if v != 0:
+        result +=1
+print(result)
+{% endhighlight %}
+
 ## DFS와 BFS
+
+{% highlight python %}
+import sys
+from collections import deque
+sys.setrecursionlimit(10**6)
+input = sys.stdin.readline
+
+N, M, V = map(int,input().split())
+
+graph = [[] for _ in range(N+1)]
+
+for _ in range(M):
+    u, v = map(int,input().split())
+    graph[u].append(v)
+    graph[v].append(u)
+
+for g in graph:
+    g.sort()
+
+d_visit = [False]*(N+1)
+d_search_list = []
+def dfs(V):
+    d_visit[V] = True
+    d_search_list.append(V)
+    for x in graph[V]:
+        if d_visit[x] == False:
+            dfs(x)
+
+def bfs(V):
+    visit = [False]*(N+1)
+    visit[V] = True
+    search_list = [V]
+    queue = deque([V])
+    while queue:
+        u = queue.popleft()
+        for v in graph[u]:
+            if visit[v] == False:
+                visit[v] = True
+                search_list.append(v)
+                queue.extend([v])
+    return search_list
+
+dfs(V)
+b_search_list = bfs(V)
+
+d_output = ''
+for d in d_search_list:
+    d_output = d_output + str(d) + ' '
+d_output = d_output[:-1]
+
+b_output = ''
+for b in b_search_list:
+    b_output = b_output + str(b) + ' '
+b_output = b_output[:-1]
+
+print(d_output)
+print(b_output)
+{% endhighlight %}
 
 ## 단지 번호 붙이기
 
