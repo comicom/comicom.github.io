@@ -1,0 +1,155 @@
+---
+layout: posts
+title:  "Backjoon Algorithm 2-1: Greedy"
+date:   2022-08-28 15:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - algorithm
+  - greedy
+---
+
+# Introduction
+
+그리디 알고리즘이란 바로 눈앞의 이익만을 좇는 알고리즘을 말한다.
+
+어떠한 문제 상황에 가장 최적인 방법을 찾는 것.
+
+## basic
+
+### 동전
+
+https://www.acmicpc.net/problem/11047
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N, K = map(int,input().split())
+
+coins = []
+for _ in range(N):
+    coin = int(input())
+    if K >= coin:
+        coins.append(coin)
+
+coins.sort(reverse=True)
+cnt = 0
+for c in coins:
+    cnt += K//c
+    K = K%c
+    if K== 0:
+        break
+print(cnt)
+{% endhighlight %}
+
+### 회의실 배정
+
+https://www.acmicpc.net/problem/1931
+
+#### 첫번째시도
+
+시간초과
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+conference = []
+for _ in range(N):
+    s, e = map(int,input().split())
+    conference.append((s,e))
+
+conference.sort()
+
+max_cnt = 0
+for i in range(N):
+    cnt = 1
+    time = conference[i][1]
+    for j in range(i+1,N):
+        if time <= conference[j][0]:
+            cnt+=1
+            time = conference[j][1]
+        else:
+            pass
+    if max_cnt < cnt:
+        max_cnt=cnt
+print(max_cnt)
+{% endhighlight %}
+
+## Practice
+
+### 수묶기
+
+https://www.acmicpc.net/problem/1744
+
+* plus는 plus끼리, minus는 minus 끼리 묶어서 곱했을 때 값이 커진다.
+* plus는 역순으로 정렬, minus는 정순으로 정렬하여 0과의 거리가 먼 순서대로 곱해준다.
+* 1일경우, 곱했을 때보다 서로 더하는게 더 크다.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+plus = []
+minus = []
+numbers = []
+for _ in range(N):
+    number = int(input())
+    if number > 0:
+        plus.append(number)
+    else:
+        minus.append(number)
+plus.sort(reverse=True)
+minus.sort()
+
+result = 0
+for i in range(0,len(plus),2):
+    if i+1 != len(plus):
+        if  plus[i] != 1 and plus[i+1] != 1:
+            result += (plus[i] * plus[i+1])
+        else:
+            result += (plus[i] + plus[i+1])
+    else:
+        result += plus[i]
+
+for i in range(0,len(minus),2):
+    if i+1 != len(minus):
+        result += (minus[i] * minus[i+1])
+    else:
+        result += minus[i]
+
+print(result)
+{% endhighlight %}
+
+### 대회 or 인턴
+
+### 30
+
+https://www.acmicpc.net/problem/10610
+
+메모리 초과
+
+{% highlight python %}
+import sys
+from itertools import permutations
+input = sys.stdin.readline
+
+N = input().rstrip("\n")
+
+per = sorted(list(permutations(N,len(N))),reverse=True)
+
+result = -1
+for p in per:
+    string = ''
+    for n in p:
+        string += n
+    if int(string)%30 == 0:
+        result = string
+        break
+print(result)
+{% endhighlight %}

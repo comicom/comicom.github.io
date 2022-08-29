@@ -74,6 +74,238 @@ for i in range(N):
 
 ## N과 M
 
+### N과 M 1
+
+https://www.acmicpc.net/problem/15649
+
+자연수 N과 M이 주어졌을 때, 아래 조건을 만족하는 길이가 M인 수열을 모두 구하는 프로그램을 작성하시오.
+
+1부터 N까지 자연수 중에서 중복 없이 M개를 고른 수열
+
+#### python itertools, premutation (순서O, 중복X) = 순열
+
+{% highlight python %}
+iterator = ['A','B','C']
+
+print(list(permutations(iterator)))
+
+>>> [('A', 'B', 'C'), ('A', 'C', 'B'), ('B', 'A', 'C'), ('B', 'C', 'A'), ('C', 'A', 'B'), ('C', 'B', 'A')]
+
+print(list(permutations(iterator, 2)))
+
+>>> [('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'C'), ('C', 'A'), ('C', 'B')]
+{% endhighlight %}
+
+#### 해답
+
+{% highlight python %}
+import sys
+from itertools import permutations
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+
+output = sorted(list(permutations(range(1,N+1),M)))
+for out in output:
+    string = ''
+    for o in out:
+        string = string + str(o) + ' '
+    print(string[:-1])
+{% endhighlight %}
+
+### N과 M 2
+
+https://www.acmicpc.net/problem/15650
+
+자연수 N과 M이 주어졌을 때, 아래 조건을 만족하는 길이가 M인 수열을 모두 구하는 프로그램을 작성하시오.
+
+* 1부터 N까지 자연수 중에서 중복 없이 M개를 고른 수열
+* 고른 수열은 오름차순이어야 한다.
+
+#### python itertools, combinations (순서X, 중복X) = 조합
+
+{% highlight python %}
+iterator = ['A','B','C']
+
+print(list(permutations(iterator)))
+
+>>> [('A', 'B', 'C'), ('A', 'C', 'B'), ('B', 'A', 'C'), ('B', 'C', 'A'), ('C', 'A', 'B'), ('C', 'B', 'A')]
+
+print(list(permutations(iterator, 2)))
+
+>>> [('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'C'), ('C', 'A'), ('C', 'B')]
+{% endhighlight %}
+
+#### 해답
+
+{% highlight python %}
+import sys
+from itertools import combinations
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+
+output = sorted(list(combinations(range(1,N+1),M)))
+for out in output:
+    string = ''
+    for o in out:
+        string = string + str(o) + ' '
+    print(string[:-1])
+{% endhighlight %}
+
+### N과 M 3
+
+https://www.acmicpc.net/problem/15650
+
+자연수 N과 M이 주어졌을 때, 아래 조건을 만족하는 길이가 M인 수열을 모두 구하는 프로그램을 작성하시오.
+
+* 1부터 N까지 자연수 중에서 M개를 고른 수열
+* 같은 수를 여러 번 골라도 된다.
+
+#### python itertools, product (순서O, 중복O)
+
+{% highlight python %}
+from itertools import product
+
+iterator = ['A','B','C','D','E']
+
+print(list(product(iterator, repeat = 1)))
+
+>>> [('A',), ('B',), ('C',), ('D',), ('E',)]
+
+print(list(product(iterator, repeat = 2)))
+
+>>> [('A', 'A'), ('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('B', 'A'), ('B', 'B'), ('B', 'C'), ('B', 'D'), ('B', 'E'), ('C', 'A'), ('C', 'B'), ('C', 'C'), ('C', 'D'), ('C', 'E'), ('D', 'A'), ('D', 'B'), ('D', 'C'), ('D', 'D'), ('D', 'E'), ('E', 'A'), ('E', 'B'), ('E', 'C'), ('E', 'D'), ('E', 'E')]
+{% endhighlight %}
+
+#### 해답
+
+{% highlight python %}
+import sys
+from itertools import product
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+
+output = sorted(list(product(range(1,N+1),repeat=M)))
+for out in output:
+    string = ''
+    for o in out:
+        string = string + str(o) + ' '
+    print(string[:-1])
+{% endhighlight %}
+
+### N과 M 4
+
+자연수 N과 M이 주어졌을 때, 아래 조건을 만족하는 길이가 M인 수열을 모두 구하는 프로그램을 작성하시오.
+
+* 1부터 N까지 자연수 중에서 M개를 고른 수열
+* 같은 수를 여러 번 골라도 된다.
+* 고른 수열은 비내림차순이어야 한다.
+    * 길이가 K인 수열 A가 A1 ≤ A2 ≤ ... ≤ AK-1 ≤ AK를 만족하면, 비내림차순이라고 한다.
+
+#### 첫번째시도
+
+메모리초과
+
+product 함수를 쓰지 말고 직접 구현해야 할 것 같다.
+
+{% highlight python %}
+import sys
+from itertools import product
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+
+output = set(product(range(1,N+1),repeat=M))
+result = []
+for out in output:
+    flag = True
+    pre_o = out[0]
+    for o in out:
+        if pre_o > o:
+            flag = False
+            break
+        pre_o = o
+    if flag == True:
+        result.append(out)
+
+result.sort()
+for res in result:
+    string = ''
+    for r in res:
+        string = string + str(r) + ' '
+    print(string[:-1])
+{% endhighlight %}
+
+### N과 M 5
+
+{% highlight python %}
+import sys
+from itertools import permutations 
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+numbers = map(int,input().split())
+
+output = sorted(list(permutations(numbers,M)))
+
+for out in output:
+    string = ''
+    for o in out:
+        string = string + str(o) +' '
+    print(string[:-1])
+{% endhighlight %}
+
+### N과 M 6
+
+{% highlight python %}
+import sys
+from itertools import combinations 
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+numbers = list(map(int,input().split()))
+
+numbers.sort()
+output = list(combinations(numbers,M))
+
+for out in output:
+    string = ''
+    for o in out:
+        string = string + str(o) +' '
+    print(string[:-1])
+{% endhighlight %}
+
+### N과 M 7
+
+{% highlight python %}
+import sys
+from itertools import product 
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+numbers = list(map(int,input().split()))
+
+numbers.sort()
+output = list(product(numbers,repeat=M))
+
+for out in output:
+    string = ''
+    for o in out:
+        string = string + str(o) +' '
+    print(string[:-1])
+{% endhighlight %}
+
+### N과 M 8
+
+N과 M 4 문제와 비슷함
+
+### N과 M 9
+### N과 M 10
+### N과 M 11
+### N과 M 12
+
 ## 순열
 
 ## 재귀

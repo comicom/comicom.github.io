@@ -10,7 +10,9 @@ tags:
   - class 4
 ---
 
-# 트리의 지름
+# 1167 트리의 지름
+
+https://www.acmicpc.net/problem/1167
 
 트리의 지름이란, 트리에서 임의의 두 점 사이의 거리 중 가장 긴 것을 말한다. 트리의 지름을 구하는 프로그램을 작성하시오.
 
@@ -83,7 +85,7 @@ print(M)
 
 다익스트라 알고리즘 내부 distance 연산 부분을 참고하여 변수를 따로 설정해서 구현했다.
 여전히 시간 초과가 발생한다.
-단방향 노드를 입력하는 부분의 수정이 필요할 것 같다.
+단방향 노드를 입력하는 부분에 수정이 필요할 것 같다.
 
 {% highlight python %}
 import sys
@@ -170,6 +172,61 @@ def bfs(graph,start):
     check[start] = True
     # result: [node_num, distance], 가장 거리가 먼 노드의 번호와 거리
     result = [0,0]
+    q = []
+    heapq.heappush(q, (start,0))
+    while q:
+        v, dist = heapq.heappop(q)
+        for node in graph[v]:
+            if check[node[0]] == False:
+                check[node[0]] = True
+                cost = dist + node[1]
+                if cost >= result[1]:
+                    result[0] = node[0]
+                    result[1] = cost
+                heapq.heappush(q, (node[0], cost))
+    return result[0], result[1]
+
+# 단방향 노드 중 최댓값 출력
+node_num, distance = bfs(graph,1)
+_, distance = bfs(graph,node_num)
+
+print(distance)
+{% endhighlight %}
+
+# 1967 트리의 지름
+
+위 문제를 풀고 힘들어서 일단 푼 알고리즘을 참고하여 수정하였다.
+다시 풀 때는 풀었던 알고리즘을 보지 않고 할 예정이다.
+
+실수한 것
+
+* 트리라고 생각해서 양방향 간선 추가를 하지 않았다.
+* 간선의 수가 (첫번째 수 - 1)이다. 
+
+결과를 보니 속도가 빠르다.
+입력값의 범위가 위 문제보다 작아서 시간초과가 안 나오는 것 같다.
+
+{% highlight python %}
+import sys
+import copy
+import heapq
+input = sys.stdin.readline
+
+V = int(input())
+
+# graph 생성 및 종단 정점 저장
+graph = [[] for _ in range(V+1)]
+for _ in range(V-1):
+    parent, child, dist = map(int,input().split())
+    graph[parent].append((child,dist))
+    graph[child].append((parent,dist))
+
+# distance를 bfs를 하면서 누적, 최댓값 출력
+def bfs(graph,start):
+    check = [False]*(V+1)
+    check[start] = True
+    # result: [node_num, distance], 가장 거리가 먼 노드의 번호와 거리
+    result = [start,0]
     q = []
     heapq.heappush(q, (start,0))
     while q:
