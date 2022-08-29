@@ -79,7 +79,7 @@ for e in endpoint:
 print(M)
 {% endhighlight %}
 
-## 두번재시도
+## 두번쨰시도
 
 다익스트라 알고리즘 내부 distance 연산 부분을 참고하여 변수를 따로 설정해서 구현했다.
 여전히 시간 초과가 발생한다.
@@ -136,4 +136,58 @@ while endpoint:
     if distance > M:    M = distance
 
 print(M)
+{% endhighlight %}
+
+## 세번째시도
+
+두번째시도에서 다익스트라 알고리즘을 참고해서 list형태로 distance를 선언했는데, 알고리즘을 작성하는 과정에서 무언가 문제가 생긴 모양인지 답이 틀렸다. 최대 distance를 구하는 것이므로 처음과 비슷한 형태로 다시 작성했다.
+
+최대 거리를 가진 두 노드를 구하는 방법은 아래와 같았다.
+
+1. 임의의 정점을 잡고 임의의 정점에서 가장 거리가 먼 정점을 찾는다.
+2. 가장 먼 정점에서 다시 가장 거리가 먼 정점을 찾는다.
+3. 2번째 값 거리 출력
+
+2번째 값은 1과 같거나 크기 때문에 max 함수를 굳이 쓸 필요 없다.
+
+{% highlight python %}
+import sys
+import copy
+import heapq
+input = sys.stdin.readline
+
+V = int(input())
+
+# graph 생성 및 종단 정점 저장
+graph = [[] for _ in range(V+1)]
+for _ in range(V):
+    lists = list(map(int,input().split()))
+    for i in range(1,len(lists)-1,2):
+        graph[lists[0]].append((lists[i],lists[i+1]))
+
+# distance를 bfs를 하면서 누적, 최댓값 출력
+def bfs(graph,start):
+    check = [False]*(V+1)
+    check[start] = True
+    # result: [node_num, distance], 가장 거리가 먼 노드의 번호와 거리
+    result = [0,0]
+    q = []
+    heapq.heappush(q, (start,0))
+    while q:
+        v, dist = heapq.heappop(q)
+        for node in graph[v]:
+            if check[node[0]] == False:
+                check[node[0]] = True
+                cost = dist + node[1]
+                if cost >= result[1]:
+                    result[0] = node[0]
+                    result[1] = cost
+                heapq.heappush(q, (node[0], cost))
+    return result[0], result[1]
+
+# 단방향 노드 중 최댓값 출력
+node_num, distance = bfs(graph,1)
+_, distance = bfs(graph,node_num)
+
+print(distance)
 {% endhighlight %}
