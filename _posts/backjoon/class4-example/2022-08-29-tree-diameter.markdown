@@ -152,7 +152,6 @@ print(M)
 
 {% highlight python %}
 import sys
-import copy
 import heapq
 input = sys.stdin.readline
 
