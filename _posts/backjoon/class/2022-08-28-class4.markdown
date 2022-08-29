@@ -31,6 +31,58 @@ tags:
   * copy.deepcopy()함수를 이용하지 않으면 사용자 지정 함수 내에서 사용한 graph 변수가 call by reference로 참조 됨 -> 시간초과
   * dummy graph 생성
 
+#### 첫번째시도
+
+deep copy 때문에 시간초과가 걸리는 것으로 보인다.
+
+{% highlight python %}
+import sys
+import copy
+from collections import deque
+sys.setrecursionlimit(10**6)
+input = sys.stdin.readline
+
+V = int(input())
+
+# graph 생성 및 종단 정점 저장
+endpoint = []
+graph = [[] for _ in range(V+1)]
+for _ in range(V):
+    lists = list(map(int,input().split()))
+    for i in range(1,len(lists)-1,2):
+        graph[lists[0]].append([lists[i],lists[i+1]])
+    if len(graph[lists[0]]) == 1:
+        endpoint.append(lists[0])
+
+for g in graph:
+    g.sort()
+
+# distance를 bfs를 하면서 누적, 최댓값 출력
+def bfs(graph,start):
+    m_graph = copy.deepcopy(graph)
+    check = [False]*(V+1)
+    check[start] = True
+    q = deque([(start,0)])
+    diameter = 0
+    while q:
+        v,dist = q.popleft()
+        for node in m_graph[v]:
+            if check[node[0]] == False:
+                check[node[0]] = True
+                node[1] += dist
+                if node[1] >= diameter:
+                    diameter = node[1]
+                q.extend([(node[0],node[1])])
+    return diameter
+
+M = 0
+for e in endpoint:
+    diameter = bfs(graph,e)
+    if diameter > M:
+        M = diameter
+
+print(M)
+{% endhighlight %}
 
 ### 후위 표기식
 
