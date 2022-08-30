@@ -505,14 +505,171 @@ print(b_output)
 
 ## 단지 번호 붙이기
 
-특이사항
+https://www.acmicpc.net/problem/2667
 
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+class searching():
+    def __init__(self,maps):
+        self._maps = maps
+        self._count_house = []
+        self._cnt = 0
+    def _dfs(self,row,col):
+        if row < 0 or row >= len(self._maps) or col < 0 or col >= len(self._maps[0]):
+            return
+        if self._maps[row][col] == '0':
+            return
+        self._maps[row][col] = '0'
+        self._dfs(row-1,col)
+        self._dfs(row+1,col)
+        self._dfs(row,col-1)
+        self._dfs(row,col+1)
+        self._cnt += 1
+    def search(self):
+        for i in range(len(self._maps)):
+            for j in range(len(self._maps[0])):
+                  if self._maps[i][j] == '1':
+                        self._cnt = 0
+                        self._dfs(i,j)
+                        self._count_house.append(self._cnt)
+        return self._count_house
+
+N = int(input())
+maps = []
+for _ in range(N):
+    lists = []
+    strings = input().rstrip("\n")
+    for s in strings:
+        lists.append(s)
+    maps.append(lists)
+
+func = searching(maps)
+result = func.search()
+result.sort()
+
+print(len(result))
+for r in result:
+    print(r)
+{% endhighlight %}
 
 ## 유기농 배추
 
+땅의 모습이 아니라 배추의 위치가 주어지는 문제
+
+https://www.acmicpc.net/problem/1012
+
+{% highlight python %}
+import sys
+sys.setrecursionlimit(10**6)
+input = sys.stdin.readline
+
+class searching():
+    def __init__(self,map):
+        self._map = map
+        self._cnt = 0
+    def _dfs(self,row,col):
+        if row < 0 or row >= len(self._map) or col < 0 or col >= len(self._map[0]):
+            return
+        if self._map[row][col] == '0':
+            return
+        self._map[row][col] = '0'
+        self._dfs(row-1,col)
+        self._dfs(row+1,col)
+        self._dfs(row,col-1)
+        self._dfs(row,col+1)
+    def search(self):
+        for i in range(len(self._map)):
+            for j in range(len(self._map[0])):
+                if self._map[i][j] == '1':
+                    self._cnt += 1
+                    self._dfs(i,j)
+        return self._cnt
+
+T = int(input())
+
+for _ in range(T):
+    M, N, K = map(int,input().split())
+    maps = [['0']*M for _ in range(N)]
+
+    for _ in range(K):
+        i, j = map(int,input().split())
+        maps[j][i] = '1'
+    
+    func = searching(maps)
+    print(func.search())
+{% endhighlight %}
+
 ## 미로 탐색
 
+BFS의 특징은 각 정점을 최단경로로 방문한다는 것입니다. 이 점을 활용해 최단거리를 구해 봅시다.
+
+{% highlight python %}
+import sys
+from collections import deque
+input = sys.stdin.readline
+
+class searching():
+    def __init__(self,map):
+        self._map = map
+        self._cnt = 0
+    def bfs(self,row,col):
+        q = deque([(row,col,1)])
+        while q:
+            r, c, dist = q.popleft()
+            # 도착
+            if r == len(self._map)-1 and c == len(self._map[0])-1:
+                break
+            # 탐색
+            if self._map[r][c] == '1':
+                self._map[r][c] = '0'
+                if r - 1 >= 0:                  q.extend([(r-1,c,dist+1)])
+                if r + 1 < len(self._map):      q.extend([(r+1,c,dist+1)])
+                if c - 1 >= 0:                  q.extend([(r,c-1,dist+1)])
+                if c + 1 < len(self._map[0]):   q.extend([(r,c+1,dist+1)])
+        return dist
+
+N, M = map(int,input().split())
+maps = []
+for _ in range(N):
+    lists = []
+    string = input().rstrip("\n")
+    for s in string:
+        lists.append(s)
+    maps.append(lists)
+
+func = searching(maps)
+print(func.bfs(0,0))
+{% endhighlight %}
+
 ## 숨바꼭질
+
+또 다른 BFS 최단거리 연습문제
+
+{% highlight python %}
+import sys
+from collections import deque
+input = sys.stdin.readline
+
+def bfs(n,k):
+    q = deque([(n,0)])
+    check = [0]*100001
+    while q:
+        point, time = q.popleft()
+        # print(point,time)
+        if point == k:
+            break
+        if check[point] == 0:
+            check[point] = 1
+            if point*2 < len(check):    q.extend([(point*2,time+1)])
+            if point+1 < len(check):    q.extend([(point+1,time+1)])
+            if point-1 >= 0:            q.extend([(point-1,time+1)])
+    return time
+
+N, K = map(int,input().split())
+print(bfs(N,K))
+{% endhighlight %}
 
 ## 나이트의 이동
 
