@@ -51,6 +51,8 @@ https://www.acmicpc.net/problem/1931
 
 시간초과
 
+반복문 범위를 줄이는 것이 필요해 보인다.
+
 {% highlight python %}
 import sys
 input = sys.stdin.readline
@@ -77,6 +79,67 @@ for i in range(N):
     if max_cnt < cnt:
         max_cnt=cnt
 print(max_cnt)
+{% endhighlight %}
+
+#### 두번째시도
+
+시간초과
+
+반복문을 사용하지 않고 탐색하는 방법을 찾아야 할 것 같다.
+
+{% highlight python %}
+import sys
+# input = sys.stdin.readline
+
+N = int(input())
+
+conference = []
+for _ in range(N):
+    s, e = map(int,input().split())
+    conference.append((s,e))
+
+conference.sort()
+
+max_cnt = 0
+for i in range(N):
+    if max_cnt > N-i:
+        break
+    cnt = 1
+    time = conference[i][1]
+    for j in range(i+1,N):
+        if max_cnt > cnt+N-j:
+            break
+        if time <= conference[j][0]:
+            cnt+=1
+            time = conference[j][1]
+        else:
+            pass
+    if max_cnt < cnt:
+        max_cnt=cnt
+print(max_cnt)
+{% endhighlight %}
+
+### ATM
+
+https://www.acmicpc.net/problem/11399
+
+필요한 시간의 합의 최솟값을 구하기 위해서는 정렬한 뒤,
+
+정렬된 인덱스 times[:], times[:N], times[:N-1], ..., times[0]을 모두 더해주면 된다. 
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+M = int(input())
+times = list(map(int,input().split()))
+
+times.sort()
+
+result = sum(times)
+for i in range(len(times)-1,-1,-1):
+    result += sum(times[:i])
+print(result)
 {% endhighlight %}
 
 ## Practice

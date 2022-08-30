@@ -36,3 +36,165 @@ print(len(result))
 for r in result:
     print(r)
 {% endhighlight %}
+
+## 비밀번호 찾기
+
+https://www.acmicpc.net/problem/17219
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+
+site = {}
+for _ in range(N):
+    name, pwd = input().split()
+    site[name] = pwd
+for _ in range(M):
+    name = input().rstrip("\n")
+    print(site[name])
+{% endhighlight %}
+
+## 피보나치수열
+
+https://www.acmicpc.net/problem/1003
+
+아래는 재귀로 푼 방법이다.
+시간초과가 발생하였다.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+numbers = [0,0]
+def fibo(n):
+    global numbers
+    if n == 0:
+        numbers[0] += 1
+        return 0
+    elif n == 1:
+        numbers[1] += 1
+        return 1
+    else:
+        return fibo(n-1) + fibo(n-2)
+
+T = int(input())
+
+for _ in range(T):
+    n = int(input())
+    numbers = [0,0]
+    fibo(n)
+    print("{} {}".format(numbers[0],numbers[1]))
+{% endhighlight %}
+
+## 파도반 수열
+
+https://www.acmicpc.net/problem/9461
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+# P(6) = 1 + 2, P(1) + P(5)
+# P(7) = 1 + 3, P(2) + P(6)
+# P(8) = 1 + 4, P(3) + P(7)
+# P(9) = 2 + 5, P(4) + P(8)
+# P(10) = 2 + 7, P(5) + P(9)
+# P(n) = P(n-5) + P(n-1)
+
+T = int(input())
+
+D = [0]*(101)
+D[1] = 1
+D[2] = 1
+D[3] = 1
+D[4] = 2
+D[5] = 2
+
+max_num = 6
+for _ in range(T):
+    n = int(input())
+    if D[n] != 0:
+        print(D[n])
+    else:
+        for i in range(max_num,n+1):
+            D[i] = D[i-5] + D[i-1]
+        max_num = n
+        print(D[n])
+{% endhighlight %}
+
+## 구간 합 구하기 4
+
+https://www.acmicpc.net/problem/11659
+
+시간초과
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+
+lists = list(map(int,input().split()))
+
+for _ in range(M):
+    i, j = map(int,input().split())
+    print(sum(lists[i-1:j]))
+{% endhighlight %}
+
+### 구간 합 배열 (Prefix Sum)
+
+어떤 배열 A의 구간 합을 배열로 저장하여 연산하는 방법
+
+배열 A가 [5, 4, 3, 2, 1]라고 할 때,
+
+구간 합 배열 pSum는 [5, 9, 12, 14, 15]이다.
+
+따라서 A[1:3]의 구간 합을 구한다 가정했을 때, A[1:3] = pSum[3]-pSum[0] 이다.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+
+lists = list(map(int,input().split()))
+pSum = [0]
+s = 0
+for l in lists:
+    s += l
+    pSum.append(s)
+
+for _ in range(M):
+    i, j = map(int,input().split())
+    print(pSum[j]-pSum[i-1])
+{% endhighlight %}
+
+### IOIOI
+
+50점
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+base = "IOI"
+if N == 1:
+    pass
+else:
+    for _ in range(1,N):
+        base += "OI"
+
+M = int(input())
+S = input().lstrip("O").rstrip("\n")
+
+cnt = 0
+length = len(base)
+for i in range(0,len(S)):
+    if len(S[i:]) > length and S[i] != "O":
+        if S[i:i+length] == base:
+            cnt += 1
+print(cnt)
+{% endhighlight %}
