@@ -17,6 +17,26 @@ tags:
     * mid값이 더 크면 right 값을 mid-1, mid 값이 더 작으면 left 값을 mid+1로 세팅
 * left > right가 될 때 까지 반복
 
+재귀적으로 표현
+
+{% highlight python %}
+def binary_search(array, value, start, end):
+    if start > end:
+        return None
+    mid = (start+end)//2
+    if array[mid] == value:
+        return mid
+    elif array[mid] > value:
+        return binary_search(array,value,start,mid-1)
+    else:
+        return binary_search(array,value,mid+1,end)
+arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+result_index = binary_search(arr, 6)
+print(result_index, arr[result_index])
+{% endhighlight %}
+
+while문으로 표현
+
 {% highlight python %}
 def binary_search(arr, value):
     first, last = 0, len(arr)
