@@ -50,6 +50,36 @@ print(binary_search(lan,0,0,lan[-1],N))
 
 ## 나무 자르기
 
+python3로 실행하면 시간 초과가 발생한다.
+
+pypy3로 실행해야 한다.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+tree = list(map(int,input().split()))
+tree.sort()
+
+def binary_search(in_arr, answer, start, end, target):
+    # 연산 부분
+    # 어떤 값 x 범위 (0,max(in_arr))
+    # 조건: sum([max(0,length-x) for length in in_arr]) == target
+    if start > end:
+        return answer
+    x = (start+end)//2
+    # 탐색 부분
+    val = sum([max(0,length-x) for length in in_arr])
+    if val >= target:
+        answer = x
+        return binary_search(in_arr, answer, x+1, end, target)
+    else:
+        return binary_search(in_arr, answer, start, x-1, target)
+
+print(binary_search(tree,0,0,tree[-1],M))
+{% endhighlight %}
+
 ## 공유기 설치
 
 ## K번째 수

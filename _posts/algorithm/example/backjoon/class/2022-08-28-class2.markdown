@@ -150,4 +150,37 @@ else:
     print(sum(money))
 {% endhighlight %}
 
-## 프린터 큐
+## 통계학
+
+https://www.acmicpc.net/problem/2108
+
+{% highlight python %}
+from collections import Counter
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+s = 0
+numbers = []
+catch = {}
+for _ in range(N):
+    num = int(input())
+    s += num
+    numbers.append(num)
+numbers.sort()
+
+print(round(s/N))
+print(numbers[N//2])
+nums = Counter(numbers).most_common()
+if N > 1:
+    if nums[0][1] == nums[1][1]:
+        print(nums[1][0])
+    else:
+        print(nums[0][0])
+else:
+    print(nums[0][0])
+print(numbers[-1]-numbers[0])
+{% endhighlight %}
+
+## 설탕 배달
