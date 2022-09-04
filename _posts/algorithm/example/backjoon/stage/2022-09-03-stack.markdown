@@ -1,0 +1,95 @@
+---
+layout: posts
+title:  "Stack"
+date:   2022-09-03 12:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - algorithm
+  - stack
+---
+
+# Introduction
+
+스택을 구현하고 사용해 봅시다.
+
+# Example
+
+https://www.acmicpc.net/step/11
+
+## 괄호
+
+주어진 문자열이 올바른 괄호열인지 판단하는 문제
+
+아래는 스택으로 풀지 않았다.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+T = int(input())
+for _ in range(T):
+    strings = input().rstrip()
+    cnt = 0
+    error = False
+    for s in strings:
+        if s == '(':
+            cnt += 1
+        elif s == ')':
+            cnt -= 1
+        if cnt < 0:
+            error = True
+            break
+    if error == True:
+        print("NO")
+    else:
+        if cnt != 0:
+            print("NO")
+        else:
+            print("YES")
+{% endhighlight %}
+
+## 균형잡힌 세상
+
+위와 같은데 괄호의 종류가 다양해진 문제
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+strings = input().rstrip()
+while strings !=  '.':
+    check_stack = []
+    error = False
+    for s in strings:
+        if s == '(' or s == '[':
+            check_stack.append(s)
+        elif s == ')':
+            if len(check_stack) > 0:
+                check = check_stack.pop()
+                if check != '(':
+                    error = True
+                    break
+            else:
+                error = True
+                break
+        elif s == ']':
+            if len(check_stack) > 0:
+                check = check_stack.pop()
+                if check != '[':
+                    error = True
+                    break
+            else:
+                error = True
+                break
+    if error == True:
+        print("no")
+    else:
+        if len(check_stack) == 0:
+            print("yes")
+        else:
+            print("no")
+    strings = input().rstrip()
+{% endhighlight %}
+
+## 오큰수

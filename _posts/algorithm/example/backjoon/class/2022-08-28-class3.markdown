@@ -88,6 +88,33 @@ for _ in range(T):
     print("{} {}".format(numbers[0],numbers[1]))
 {% endhighlight %}
 
+아래는 다이나믹 프로그래밍으로 푼 방법이다.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+def fibonacci(dp,n):
+    if dp[n][0] == 0 and dp[n][1] == 0:
+        dp_1 = fibonacci(dp,n-1)
+        dp_2 = fibonacci(dp,n-2)
+        dp[n][0] = dp_1[0] + dp_2[0]
+        dp[n][1] = dp_1[1] + dp_2[1]
+        return dp[n]
+    else:
+        return dp[n]
+
+T = int(input())
+
+dp = [[0,0] for _ in range(41)]
+dp[0] = [1,0]
+dp[1] = [0,1]
+for _ in range(T):
+    number = int(input())
+    zero, one = fibonacci(dp,number)
+    print(zero, one)
+{% endhighlight %}
+
 ## 파도반 수열
 
 https://www.acmicpc.net/problem/9461

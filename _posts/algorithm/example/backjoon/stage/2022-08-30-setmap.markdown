@@ -14,56 +14,6 @@ tags:
 
 특정 원소가 속해 있는지 빠르게 찾거나, 각 원소에 대응되는 원소를 빠르게 찾는 자료구조를 배워 봅시다.
 
-## 집합
-
-python 집합 자료형.
-순서가 없고 중복을 허용하지 않는다는 특징을 가진다.
-
-순서가 없기 때문에 인덱스를 이용해서 값을 참조할 수 없다.
-
-* 기본 사용 방법
-
-{% highlight python %}
-# 집합 선언
-set1 = set([1,2,3])
-# 값 하나 추가 : add(x)
-set1.add(4)
-print(set1) 
-# 값 여러개 추가 : update(x)
-set1.update([5,6,7,8,9,10])
-print(set1) 
-# 값 제거 : remove(x)
-set1.remove(10)
-print(set1)
-# 값 안전하게 제거 : discard(x) // 없으면 제거 안함, 속도는 remove보다 느림
-set1.remove(1)
-print(set1)
-# 집합 set1 제거
-del set1
-{% endhighlight %}
-
-* 집합 연산 (교집합, 합집합, 차집합)
-
-{% highlight python %}
-# 집합 선언
-set1 = set([1,2,3])
-set2 = set([2,4,5,6])
-set3 = set()
-# 공집합 
-# set1과 set2의 교집합
-print(set1 & set2)
-print(set1.intersection(set2)) 
-# set1과 set2의 합집합
-print(set1 | set2)
-print(set1.union(set2)) 
-# set1과 set2의 차집합
-print(set1 - set2)
-print(set1.difference(set2))
-print(set2.difference(set1))
-# set1과 set2의 합집합에서 교집합을 뺀 차집합
-print(set1 ^ set2)
-{% endhighlight %}
-
 # Example
 
 https://www.acmicpc.net/step/49

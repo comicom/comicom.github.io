@@ -129,3 +129,25 @@ for m in range(maximum-1,-1,-1):
         break
 print(result)
 {% endhighlight %}
+
+## 수 정렬하기 3
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+K = int(input())
+money = []
+for _ in range(K):
+    number = int(input())
+    if number != 0:
+        money.append(number)
+    else:
+        money.pop()
+if len(money) == 0:
+    print(0)
+else:
+    print(sum(money))
+{% endhighlight %}
+
+## 프린터 큐
