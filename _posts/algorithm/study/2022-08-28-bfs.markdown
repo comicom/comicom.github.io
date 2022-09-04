@@ -1,6 +1,6 @@
 ---
 layout: posts
-title:  "Backjoon Algorithm 1-2: BFS"
+title:  "BFS / DFS"
 date:   2022-08-28 14:10:28 +0900
 categories: Backjoon
 tags:
