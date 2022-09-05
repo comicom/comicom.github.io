@@ -25,19 +25,109 @@ https://www.acmicpc.net/problem/2166
 
 ## 용액
 
-이분탐색, 두포인터
+이분탐색, 투포인터
 
 ## 최소 스패닝 트리
 
 최소 스패닝 트리
 
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+V, E = map(int,input().split())
+
+# 부모 테이블상에서, 부모를 자기 자신으로 초기화
+#   -> 독립된 노드라는 의미
+parent = [0]*(V+1)
+for i in range(1,V+1):
+    parent[i] = i
+
+# 간선을 입력받아 cost를 기준으로 오름차순 정렬
+edges = []
+for _ in range(E):
+    A, B, C = map(int,input().split())
+    edges.append((C,A,B))
+edges.sort()
+
+## Union-Find Algorithm
+# Find: 특정 원소가 속한 집합 찾기
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+# Union: 두 원소가 속한 집합을 합치기
+def union_parent(parent, a, b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+result = 0
+## Kruskal Algorithm
+# cost가 낮은 순으로 정렬된 간선을 하나씩 확인
+for edge in edges:
+    cost, a, b = edge
+    # 두 노드의 루트 노드가 서로 다르면 사이클이 발생하지 않는다.
+    if find_parent(parent,a) != find_parent(parent,b):
+        # 신장 트리 추가 및 사이클 태이블 갱신
+        union_parent(parent,a,b)
+        result += cost
+
+print(result)
+{% endhighlight %}
+
 ## 도시 분할 계획
 
 최소 스패닝 트리
 
+두 개로 마을을 분할하므로, 연결된 스패닝 트리에서 가장 cost가 높은 값을 빼준다.
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N, M = map(int,input().split())
+
+cycle_table = [0]*(N+1)
+for i in range(N+1):
+    cycle_table[i] = i
+
+edges = []
+for _ in range(M):
+    a, b, cost = map(int,input().split())
+    edges.append((cost,a,b))
+edges.sort()
+
+def find_parent(parent,x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent,parent[x])
+    return parent[x]
+def union_parent(parent,a,b):
+    a = find_parent(parent,a)
+    b = find_parent(parent,b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+result = 0
+high_cost = 0
+for edge in edges:
+    cost, a, b = edge
+    if find_parent(cycle_table,a) != find_parent(cycle_table,b):
+        union_parent(cycle_table,a,b)
+        result += cost
+        if high_cost < cost:
+            high_cost = cost
+
+print(result-high_cost)
+{% endhighlight %}
+
 ## 부분합
 
-누적합, 두포인터
+누적합, 투포인터
 
 ## 알파벳
 
