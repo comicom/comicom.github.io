@@ -23,6 +23,35 @@ LIS(Longest Increasing Subsequence)는 불연속 상관없이 가장 긴 증가�
 
 ## 이진 탐색
 
+bisect.bisect_left(arr, x): arr가 정렬되어있다는 가정하에 x값이 들어갈 위치 반환
+
+1. dp를 numbers[0]으로 초기화한다.
+
+2. 현재 위치(i)가 이전 위치의 원소들보다 크면 dp에 추가한다.
+
+3. 현재 위치(i)가 이전 위치의 원소보다 작거나 같으면, bisect.bisect_left로 이전 위치의 원소 중 가장 큰 원소의 index값을 구한다. 그리고 dp의 index 원소를 numbers[i]로 바꿔준다.
+
 {% highlight python %}
+import sys
+import bisect
+input = sys.stdin.readline
+
+N = int(input())
+numbers = list(map(int,input().split()))
+
+dp = [numbers[0]]
+
+for i in range(N):
+    if numbers[i] > dp[-1]:
+        dp.append(numbers[i])
+    else:
+        idx = bisect.bisect_left(dp,numbers[i])
+        dp[idx] = numbers[i]
+
+print(dp)
+print(len(dp))
 {% endhighlight %}
 
+## 참조
+
+https://buyandpray.tistory.com/73

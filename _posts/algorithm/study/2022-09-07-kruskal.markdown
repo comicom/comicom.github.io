@@ -11,47 +11,4 @@ tags:
 
 # Introduction
 
-LIS(Longest Increasing Subsequence)는 불연속 상관없이 가장 긴 증가하는 부분 수열을 구하는 알고리즘이다.
 
-예시로, 수열 A = {10, 20, 10, 30, 20, 50}이 있다고 하면 해당 수열의 LIS는 {10, 20, 30, 50} 이다.
- 
-
-풀이 방법으로는 DP를 활용한 LIS, 이진탐색을 활용한 LIS 두 가지가 있다.
-
-* DP는 단순하지만 시간복잡도가 O(n^2)을 가진다.
-* 이진탐색을 활용하면 시간복잡도를 O(nlogn)을 가진다.
-
-## 이진 탐색
-
-bisect.bisect_left(arr, x): arr가 정렬되어있다는 가정하에 x값이 들어갈 위치 반환
-
-1. dp를 numbers[0]으로 초기화한다.
-
-2. 현재 위치(i)가 이전 위치의 원소들보다 크면 dp에 추가한다.
-
-3. 현재 위치(i)가 이전 위치의 원소보다 작거나 같으면, bisect.bisect_left로 이전 위치의 원소 중 가장 큰 원소의 index값을 구한다. 그리고 dp의 index 원소를 numbers[i]로 바꿔준다.
-
-{% highlight python %}
-import sys
-import bisect
-input = sys.stdin.readline
-
-N = int(input())
-numbers = list(map(int,input().split()))
-
-dp = [numbers[0]]
-
-for i in range(N):
-    if numbers[i] > dp[-1]:
-        dp.append(numbers[i])
-    else:
-        idx = bisect.bisect_left(dp,numbers[i])
-        dp[idx] = numbers[i]
-
-print(dp)
-print(len(dp))
-{% endhighlight %}
-
-## 참조
-
-https://buyandpray.tistory.com/73
