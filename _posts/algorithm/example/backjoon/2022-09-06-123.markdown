@@ -19,6 +19,8 @@ https://www.acmicpc.net/workbook/view/6509
 
 ## 1, 2, 3 더하기
 
+dp 문제
+
 {% highlight python %}
 import sys
 input = sys.stdin.readline
@@ -48,9 +50,77 @@ for _ in range(T):
 
 ## 1, 2, 3 더하기 2
 
+백트래킹 문제
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, k = map(int,input().split())
+num = []
+find_flag = False
+cnt = 1
+def dfs():
+    global cnt
+    global find_flag
+    if find_flag == True:
+        return
+    if sum(num) == n:
+        if cnt == k:
+            print("+".join(map(str,num)))
+            find_flag = True
+        cnt += 1
+        return
+    for i in [1,2,3]:
+        if i + sum(num) <= n:
+            num.append(i)
+            dfs()
+            num.pop()
+
+dfs()
+if find_flag == False:
+    print(-1)
+{% endhighlight %}
+
 ## 1, 2, 3 더하기 3
 
+dp 문제
+
+* 모듈러 연산은 나눗셈 연산을 제외한 모든 연산에서 분배법칙이 성립한다
+    * (A+B)%M = (A%M+B%M)%M
+    * (A-B)%M = (A%M-B%M)%M
+    * (A*B)%M = (A%M*B%M)%M
+* 시간 초과 문제로, 바텀업 방식으로 작성해야 함
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+T = int(input())
+
+dp = [0]*1000001
+dp[1] = 1
+dp[2] = 2
+dp[3] = 4
+
+cnt = 4
+def dynamic(dp,num):
+    global cnt
+    if dp[num] != 0:
+        return dp[num]
+    else:
+        for n in range(cnt,num+1):
+            dp[n] = (dp[n-1] + dp[n-2] + dp[n-3])%1000000009
+        cnt = num
+        return dp[num]
+
+for _ in range(T):
+    in_num = int(input())
+    print(dynamic(dp,in_num))
+{% endhighlight %}
+
 ## 1, 2, 3 더하기 4
+
 
 ## 1, 2, 3 더하기 5
 

@@ -1,0 +1,51 @@
+---
+layout: posts
+title:  "solved.ac: CLASS 5"
+date:   2022-09-07 04:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - algorithm
+  - solved.ac
+---
+
+# Introduction
+
+## 1로 만들기 2
+
+dfs, 백트래킹
+
+## 다각형의 면적
+
+https://www.acmicpc.net/problem/2166
+
+변의 길이가 다른 다각형의 넓이 구하기
+
+수학
+
+## 용액
+
+이분탐색, 두포인터
+
+## 최소 스패닝 트리
+
+최소 스패닝 트리
+
+## 도시 분할 계획
+
+최소 스패닝 트리
+
+## 부분합
+
+누적합, 두포인터
+
+## 알파벳
+
+깊이 우선 탐색
+백트래킹
+
+## 스도쿠
+
+## 별자리 만들기
+
+## LCS 2

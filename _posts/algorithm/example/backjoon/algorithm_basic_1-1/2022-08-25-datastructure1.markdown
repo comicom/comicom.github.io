@@ -145,6 +145,30 @@ else:
 
 ### 에디터
 
+시간 초과
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+strings = list(input().rstrip("\n"))
+N = int(input())
+cursor = len(strings)
+for _ in range(N):
+    cmd = input().split()
+    if cmd[0] == "L" and cursor != 0:
+        cursor -= 1
+    if cmd[0] == "D" and cursor != len(strings)-1:
+        cursor += 1
+    if cmd[0] == "B" and cursor != 0:
+        strings.pop(cursor-1)
+        cursor -= 1
+    if cmd[0] == "P":
+        strings.insert(cursor,cmd[1])
+        cursor += 1
+print(''.join(strings))
+{% endhighlight %}
+
 ### 큐
 
 https://www.acmicpc.net/problem/10845
@@ -192,7 +216,30 @@ note.
 위 문제는 파이썬에서 기본적으로 제공되는 linked list 자료구조로 구현한 것이다.
 queue module은 따로 있다. [!ref](https://docs.python.org/ko/3.7/library/queue.html)
 
-### 조세퍼스 문제
+### 요세푸스 문제
+
+https://www.acmicpc.net/problem/1158
+
+{% highlight python %}
+import sys
+from collections import deque
+input = sys.stdin.readline
+
+N, K = map(int,input().split())
+numbers = deque([i] for i in range(1,N+1))
+result = []
+cnt = 1
+while numbers:
+    if cnt%K != 0:
+        n = numbers.popleft()
+        numbers.append(n)
+        cnt += 1
+    else:
+        n = numbers.popleft()
+        result.append(*n)
+        cnt = 1
+print("<"+", ".join(map(str,result))+">")
+{% endhighlight %}
 
 ### 덱
 

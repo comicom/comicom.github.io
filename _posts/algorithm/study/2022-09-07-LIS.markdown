@@ -1,0 +1,28 @@
+---
+layout: posts
+title:  "가장 긴 증가하는 부분 수열 LIS"
+date:   2022-09-05 12:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - algorithm
+  - LIS
+---
+
+# Introduction
+
+LIS(Longest Increasing Subsequence)는 불연속 상관없이 가장 긴 증가하는 부분 수열을 구하는 알고리즘이다.
+
+예시로, 수열 A = {10, 20, 10, 30, 20, 50}이 있다고 하면 해당 수열의 LIS는 {10, 20, 30, 50} 이다.
+ 
+
+풀이 방법으로는 DP를 활용한 LIS, 이진탐색을 활용한 LIS 두 가지가 있다.
+
+* DP는 단순하지만 시간복잡도가 O(n^2)을 가진다.
+* 이진탐색을 활용하면 시간복잡도를 O(nlogn)을 가진다.
+
+## 이진 탐색
+
+{% highlight python %}
+{% endhighlight %}
+
