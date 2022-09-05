@@ -1,0 +1,63 @@
+---
+layout: posts
+title:  "백준시리즈: 1, 2, 3 더하기"
+date:   2022-09-15 12:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - algorithm
+  - series
+---
+
+# Introduction
+
+재귀 함수를 연습하기 좋은 문제
+
+dp, 백트래킹
+
+https://www.acmicpc.net/workbook/view/6509
+
+## 1, 2, 3 더하기
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+# 1, 1
+# 2, 11, 2
+# 3, 111, 12, 21, 3
+# 4, 1111, 112, 121, 211, 22, 13, 31
+
+dp = [0]*12
+dp[1] = 1
+dp[2] = 2
+dp[3] = 4
+
+def find123(dp,num):
+    if dp[num] != 0:
+        return dp[num]
+    else:
+        dp[num] = find123(dp,num-1) + find123(dp,num-2) + find123(dp,num-3)
+        return dp[num]
+
+T = int(input())
+for _ in range(T):
+    num = int(input())
+    print(find123(dp,num))
+{% endhighlight %}
+
+## 1, 2, 3 더하기 2
+
+## 1, 2, 3 더하기 3
+
+## 1, 2, 3 더하기 4
+
+## 1, 2, 3 더하기 5
+
+## 1, 2, 3 더하기 6
+
+## 1, 2, 3 더하기 7
+
+## 1, 2, 3 더하기 8
+
+## 1, 2, 3 더하기 9

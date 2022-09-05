@@ -1,0 +1,315 @@
+---
+layout: posts
+title:  "백준시리즈: N과 M"
+date:   2022-09-15 12:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - algorithm
+  - series
+---
+
+# Introduction
+
+재귀 함수를 연습하기 좋은 문제
+
+백트래킹
+
+https://www.acmicpc.net/workbook/view/2052
+
+##  N과 M (1)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+
+s = []
+
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    for i in range(1,n+1):
+        if i not in s:
+            s.append(i)
+            dfs()
+            s.pop()
+dfs()
+{% endhighlight %}
+
+##  N과 M (2)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+
+s = []
+
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    for i in range(1,n+1):
+        if len(s) == 0 or i > s[-1]:
+            s.append(i)
+            dfs()
+            s.pop()
+dfs()
+{% endhighlight %}
+
+##  N과 M (3)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+
+s = []
+
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    for i in range(1,n+1):
+        # if len(s) == 0 or i > s[-1]:
+        s.append(i)
+        dfs()
+        s.pop()
+dfs()
+{% endhighlight %}
+
+##  N과 M (4)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+
+s = []
+
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    for i in range(1,n+1):
+        if len(s) == 0 or i >= s[-1]:
+            s.append(i)
+            dfs()
+            s.pop()
+dfs()
+{% endhighlight %}
+
+##  N과 M (5)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+lists = list(map(int,input().split()))
+lists.sort()
+
+s = []
+
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    for i in range(n):
+        if lists[i] not in s:
+            s.append(lists[i])
+            dfs()
+            s.pop()
+dfs()
+{% endhighlight %}
+
+##  N과 M (6)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+lists = list(map(int,input().split()))
+lists.sort()
+
+s = []
+
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    for i in range(n):
+        if lists[i] not in s:
+            s.append(lists[i])
+            dfs()
+            s.pop()
+dfs()
+{% endhighlight %}
+
+##  N과 M (7)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+lists = list(map(int,input().split()))
+lists.sort()
+
+s = []
+
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    for i in range(n):
+        if len(s) == 0 or lists[i] > s[-1]:
+            s.append(lists[i])
+            dfs()
+            s.pop()
+dfs()
+{% endhighlight %}
+
+##  N과 M (8)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+lists = list(map(int,input().split()))
+lists.sort()
+
+s = []
+
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    for i in range(n):
+        if len(s) == 0 or lists[i] > s[-1]:
+            s.append(lists[i])
+            dfs()
+            s.pop()
+dfs()
+{% endhighlight %}
+
+##  N과 M (9)
+
+해당 문제에서 list는 정렬되어 있기 때문에
+[1,7,9,9] 일 경우, 직전 값을 저장해서 같지 않을 경우만 확인하면 된다.
+
+또한, 방문했던 값은 다시 방문해서는 안 된다.
+따라서 visited 변수를 사용하여 방문했던 곳을 저장해야한다.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+lists = list(map(int,input().split()))
+lists.sort()
+
+s = []
+visited  = [False]*(n)
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    x = 0
+    for i in range(n):
+        if visited[i] == False and x != lists[i]:
+            visited[i] = True
+            s.append(lists[i])
+            x = lists[i]
+            dfs()
+            s.pop()
+            visited[i] = False
+dfs()
+{% endhighlight %}
+
+##  N과 M (10)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+lists = list(map(int,input().split()))
+lists.sort()
+
+s = []
+visited  = [False]*(n)
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    x = 0
+    for i in range(n):
+        if visited[i] == False and x != lists[i] and (len(s)==0 or lists[i] >= s[-1]):
+            visited[i] = True
+            s.append(lists[i])
+            x = lists[i]
+            dfs()
+            s.pop()
+            visited[i] = False
+dfs()
+{% endhighlight %}
+
+##  N과 M (11)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+lists = list(map(int,input().split()))
+lists.sort()
+
+s = []
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    x = 0
+    for i in range(n):
+        if x != lists[i]:
+            s.append(lists[i])
+            x = lists[i]
+            dfs()
+            s.pop()
+dfs()
+{% endhighlight %}
+
+##  N과 M (12)
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+lists = list(map(int,input().split()))
+lists.sort()
+
+s = []
+def dfs():
+    if len(s) == m:
+        print(" ".join(map(str,s)))
+        return
+    x = 0
+    for i in range(n):
+        if x != lists[i] and (len(s) == 0 or lists[i] >= s[-1]):
+            s.append(lists[i])
+            x = lists[i]
+            dfs()
+            s.pop()
+dfs()
+{% endhighlight %}
+

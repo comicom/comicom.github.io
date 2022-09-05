@@ -13,6 +13,20 @@ tags:
 
 ## 실버
 
+### 조합
+
+{% highlight python %}
+import sys
+import math
+input = sys.stdin.readline
+
+n, m = map(int,input().split())
+
+up = math.factorial(n)
+down = math.factorial(n-m)*math.factorial(m)
+print(up//down)
+{% endhighlight %}
+
 ## 골드
 
 ### 후위 표기식

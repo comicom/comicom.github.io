@@ -135,11 +135,32 @@ print(D[N]%10007)
 
 https://www.acmicpc.net/problem/9095
 
-#### 같은 것이 있는 순열
+{% highlight python %}
+import sys
+input = sys.stdin.readline
 
-ex) aaabb 일 때, 경우의 수
+# 1, 1
+# 2, 11, 2
+# 3, 111, 12, 21, 3
+# 4, 1111, 112, 121, 211, 22, 13, 31
 
-(전체 개수)! / (a의 개수)!*(b의 개수)!
+dp = [0]*12
+dp[1] = 1
+dp[2] = 2
+dp[3] = 4
+
+def find123(dp,num):
+    if dp[num] != 0:
+        return dp[num]
+    else:
+        dp[num] = find123(dp,num-1) + find123(dp,num-2) + find123(dp,num-3)
+        return dp[num]
+
+T = int(input())
+for _ in range(T):
+    num = int(input())
+    print(find123(dp,num))
+{% endhighlight %}
 
 #### 점화식
 

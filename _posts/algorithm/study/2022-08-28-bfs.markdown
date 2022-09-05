@@ -11,9 +11,199 @@ tags:
 
 # Introduction
 
-## 1차원 그래프 BFS / DFS 순회
+그래프는 다대다의 연결관계를 표현합니다. 정점들의 집합과 이들을 연결하는 간선들의 집합으로 구성된 자료구조입니다.
 
-## 2차원 배열 BFS / DFS 순회
+	@@ -18,7 +18,7 @@ tags:
+차수(Degree) : 정점 하나에 연결된 간선의 수
+V 개의 정점을 갖는 그래프의 최대 간선의 수는 V * (V-1) / 2 (무향 그래프 - 양방향)
+
+## 그래프 유형
+
+- 무향 그래프(Undirected Graph) : 일방통행이 없는 양방향 그래프
+- 유향 그래프, 방향 그래프(Directed Graph) : 하나의 간선이 하나의 방향만을 표현(화살표로 표현)
+	@@ -33,7 +33,7 @@ V 개의 정점을 갖는 그래프의 최대 간선의 수는 V * (V-1) / 2 (
+- 각 정점은 최대 하나의 부모노드만을 가짐
+- 각 정점는 자식 정점(단말 노드)가 없거나 하나 이상 존재
+
+## 경로
+
+경로(Path)란 어떤 정점에서 시작하여 다른 정점으로 끝나는 순회로 두 정점 사이를 잇는 간선들을 순서대로 나열한 것을 말합니다.
+
+	@@ -42,7 +42,7 @@ V 개의 정점을 갖는 그래프의 최대 간선의 수는 V * (V-1) / 2 (
+  - 경로의 시작점과 끝점이 같음 또는
+  - 경로에서 어떤 정점을 2번이상 거치는 경우
+
+## 그래프의 표현
+- 인접 행렬(Adjacent matrix)
+  - 정점 중심
+  - V * V 크기의 2차원 배열을 이용해서 간선 정보를 저장
+	@@ -54,19 +54,19 @@ V 개의 정점을 갖는 그래프의 최대 간선의 수는 V * (V-1) / 2 (
+- 간선 리스트(Edge List)
+  - 간선(시작 정점, 끝 정점)의 정보를 객체로 표현하여 리스트에 저장
+
+## 인접 행렬
+- V * V 정방 행렬
+- 행 번호와 열 번호는 각 그래프의 정점에 대응
+- 가중치가 없을 경우 연결정보만 저장, 가중치가 표현된다면 각 간선의 가중치를 표현
+
+### 무향 그래프
+- i 번째 행의 합 = i 번째 열의 합 = Vi의 차수
+
+### 유향 그래프
+- 행 i 의 합 = Vi의 진출 차수( 나가는 경우 )
+- 열 i 의 합 = Vi의 진입 차수( 들어오는 경우 )
+
+### 인접 행렬의 단점
+- 희소그래프
+  - 정점은 많지만 간선이 적은 그래프
+  - 각 정점의 몇 개 없는 간선을 표현하기 위해 큰 크기의 배열이 필요함
+	@@ -75,25 +75,25 @@ V 개의 정점을 갖는 그래프의 최대 간선의 수는 V * (V-1) / 2 (
+  - 정점은 적지만 간선이 많은 그래프(ex 완전 그래프)
+  - 밀집 그래프를 표현하기 좋음
+
+## 인접 리스트
+- 각 정점에 대한 인접 정점들을 순차적으로 표현
+- 하나의 정점에 대한 인접 정점들을 각각 노드로 하는 연결리스트로 저장
+
+# 1차원 그래프 BFS / DFS 순회
+
+## 너비우선탐색(BFS)
+
+### 개념
+
+너비우선 탐색은 탐색 시작점의 인접한 정점들을 먼저 모두 차례로 방문한 후에 방문했던 정점을 시작점으로 하여 다시 인접한 정점들을 차례로 방문하는 방식입니다. 따라서 선입선출 형태의 큐 자료구조를 활용하여 만듭니다.
+
+탐색의 과정 중 정점에 도착한 경로가 있을 때, 해당 경로는 시작 정점과 해당 정점에 대한 최단 경로입니다.
+
+### 구현
+
+그래프 표현
+
+{% highlight python %}
+graph = {
+    'A': ['B'],
+    'B': ['A', 'C', 'H'],
+    'C': ['B', 'D'],
+    'D': ['C', 'E', 'G'],
+    'E': ['D', 'F'],
+    'F': ['E'],
+    'G': ['D'],
+    'H': ['B', 'I', 'J', 'M'],
+    'I': ['H'],
+    'J': ['H', 'K'],
+    'K': ['J', 'L'],
+    'L': ['K'],
+    'M': ['H']
+}
+{% endhighlight %}
+
+BFS 구현
+
+{% highlight python %}
+def bfs(graph, start_node):
+  visit = list()
+  queue = list()
+
+  queue.append(start_node)
+
+  while queue:
+    node = queue.pop(0)
+    if node not in visit:
+      visit.append(node)
+      queue.extend(graph[node])
+
+  return visit
+{% endhighlight %}
+
+## 깊이우선탐색(DFS)
+
+### 개념
+
+시작 정점의 한 방향으로 갈 수 있는 경로가 있는 곳까지 깊이 탐색해가다가 더 이상 갈 곳이 없게 되면 가장 마지막에 만났던 갈림길 간선이 있는 정점으로 되돌아와서 다른 방향의 정점으로 탐색을 계속 반복하여 결국 모든 정점을 방문하는 순회 방법입니다.
+
+가장 마지막에 만났던 갈림길의 정점으로 되돌아가서 탐색하므로 후입선출 구조로 구현합니다. 메모리 스택을 활용한 재귀 함수, 혹은 직접 스택에 탐색 내용을 사용합니다.
+
+### 구현
+
+그래프 표현
+
+{% highlight python %}
+graph = {
+    'A': ['B'],
+    'B': ['A', 'C', 'H'],
+    'C': ['B', 'D'],
+    'D': ['C', 'E', 'G'],
+    'E': ['D', 'F'],
+    'F': ['E'],
+    'G': ['D'],
+    'H': ['B', 'I', 'J', 'M'],
+    'I': ['H'],
+    'J': ['H', 'K'],
+    'K': ['J', 'L'],
+    'L': ['K'],
+    'M': ['H']
+}
+{% endhighlight %}
+
+DFS 구현
+
+{% highlight python %}
+def dfs(graph, start_node):
+  visit = list()
+  stack = list()
+
+  stack.append(start_node)
+
+  while stack:
+    node = stack.pop()
+    if node not in visit:
+      visit.append(node)
+      stack.extend(graph[node])
+
+  return visit
+{% endhighlight %}
+
+DFS 구현 (재귀)
+
+{% highlight python %}
+import sys
+sys.setrecursionlimit(10 ** 9)
+input = sys.stdin.readline
+
+# dfs(V, E, R) {  # V : 정점 집합, E : 간선 집합, R : 시작 정점
+#     visited[R] <- YES;  # 시작 정점 R을 방문 했다고 표시한다.
+#     for each x ∈ E(R)  # E(R) : 정점 R의 인접 정점 집합.(정점 번호를 오름차순으로 방문한다)
+#         if (visited[x] = NO) then dfs(V, E, x);
+# }
+
+N, M, R = map(int, input().split())
+graph = [[] for i in range(N+1)]
+
+for _ in range(M):
+    u, v = map(int, input().split())
+    graph[u].append(v)
+    graph[v].append(u)
+
+for g in graph:
+    g.sort()
+
+visit = [0]*(N+1)
+cnt =  1
+def dfs(R):
+    global cnt
+    visit[R] = cnt
+    for x in graph[R]:
+        if visit[x] == 0:
+            cnt+=1
+            dfs(x)
+
+dfs(R)
+
+for i in range(1,N+1):
+    print(visit[i])
+{% endhighlight %}
+
+# 2차원 배열 BFS / DFS 순회
 
 {% highlight python %}
 class searching:
