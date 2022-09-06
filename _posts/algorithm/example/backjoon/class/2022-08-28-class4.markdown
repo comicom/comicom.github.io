@@ -33,7 +33,7 @@ print(up//down)
 
 중위 표기식이 주어졌을 때 후위 표기식으로 고치는 프로그램을 작성하시오.
 
--> 그래프 문제, BFS ? DFS?
+-> 자료구조, 스택
 
 ### 피보나치 수 6
 
@@ -41,11 +41,53 @@ print(up//down)
 
 ### 파티
 
+https://www.acmicpc.net/problem/1238
+
 어느 날 이 N명의 학생이 X (1 ≤ X ≤ N)번 마을에 모여서 파티를 벌이기로 했다. 이 마을 사이에는 총 M개의 단방향 도로들이 있고 i번째 길을 지나는데 Ti(1 ≤ Ti ≤ 100)의 시간을 소비한다.
 
 각각의 학생들은 파티에 참석하기 위해 걸어가서 다시 그들의 마을로 돌아와야 한다. 하지만 이 학생들은 워낙 게을러서 최단 시간에 오고 가기를 원한다.
 
 -> 다익스트라
+
+{% highlight python %}
+import sys
+import heapq
+input = sys.stdin.readline
+
+N, M, X = map(int,input().split())
+
+edges = [[] for _ in range(N+1)]
+for _ in range(M):
+    start, end, cost = map(int,input().split())
+    edges[start].append((cost,end))
+
+for e in edges:
+    e.sort()
+
+INF = int(1e9)
+def dijkstra(start):
+    q = []
+    heapq.heappush(q,(0,start))
+    distance = [INF]*(N+1)
+    distance[start] = 0
+    while q:
+        dist, now = heapq.heappop(q)
+        if distance[now] < dist:
+            continue
+        for edge in edges[now]:
+            next_dist = dist + edge[0]
+            if next_dist < distance[edge[1]]:
+                distance[edge[1]] = next_dist
+                heapq.heappush(q,(next_dist,edge[1]))
+    return distance
+
+max_time = 0
+for i in range(1,N+1):
+    time = dijkstra(i)[X]+dijkstra(X)[i]
+    if max_time < time:
+        max_time = time
+print(max_time)
+{% endhighlight %}
 
 ### 웜홀
 
@@ -60,3 +102,108 @@ TC개의 줄에 걸쳐서 만약에 시간이 줄어들면서 출발 위치로 �
 ### 최소비용구하기2
 
 -> 다익스트라
+
+### 거짓말
+
+-> 그래프, 분리 집합
+
+### 벽 부수고 이동하기
+
+### 별 찍기 - 11
+
+### 이진 검색 트리
+
+### N-Queen
+
+### 문자열 폭발
+
+-> 자료구조, 문자열, 스택
+
+https://www.acmicpc.net/problem/9935
+
+{% highlight python %}
+{% endhighlight %}
+
+### 행렬 제곱
+
+### 가장 긴 바이토닉 부분 수열
+
+### 플로이드
+
+-> 플로이드 와샬
+
+### 숨바꼭질 2
+
+### 시그마
+
+### 연구소
+
+### 서강그라운드
+
+### 미세먼지 안녕!
+
+### 최소비용 구하기
+
+{% highlight python %}
+import sys
+import heapq
+input = sys.stdin.readline
+
+N = int(input())
+M = int(input())
+
+graph = [[] for _ in range(N+1)]
+for _ in range(M):
+    start, end, cost = map(int,input().split())
+    graph[start].append((end,cost))
+
+for g in graph:
+    g.sort()
+
+start_point, end_point = map(int,input().split())
+
+INF = int(1e9)
+costs = [INF]*(N+1)
+def dijkstra(start):
+    q = []
+    heapq.heappush(q,(0,start))
+    costs[start] = 0
+    while q:
+        cost, now = heapq.heappop(q)
+        if costs[now] < cost:
+            continue
+        for next, next_cost in graph[now]:
+            new_cost = cost + next_cost
+            if new_cost < costs[next]:
+                costs[next] = new_cost
+                heapq.heappush(q,(new_cost,next))
+
+
+dijkstra(start_point)
+
+print(costs[end_point])
+{% endhighlight %}
+
+### 내려가기
+
+-> 다이나믹 프로그래밍, 슬라이딩 윈도우
+
+### LCS
+
+-> 다이나믹 프로그래밍, 문자열
+
+### 평범한 배낭
+
+-> 다이나믹 프로그래밍, 배낭 문제
+
+### 숨바꼭질 3
+
+-> 그래프 이론, 그래프 탐색, 너비 우선 탐색, 다익스트라, 0-1 너비 우선 탐색
+
+### 치킨 배달
+
+-> 구현, 브루트포스 알고리즘, 백트래킹
+
+### 파이프 옮기기1
+
+-> 다이나믹 프로그래밍, 그래프이론, 그래프 탐색

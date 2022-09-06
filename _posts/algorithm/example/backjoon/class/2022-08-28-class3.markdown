@@ -225,3 +225,47 @@ for i in range(0,len(S)):
             cnt += 1
 print(cnt)
 {% endhighlight %}
+
+### 최소비용 구하기
+
+https://www.acmicpc.net/problem/1916
+
+{% highlight python %}
+import sys
+import heapq
+input = sys.stdin.readline
+
+N = int(input())
+M = int(input())
+
+graph = [[] for _ in range(N+1)]
+for _ in range(M):
+    start, end, cost = map(int,input().split())
+    graph[start].append((end,cost))
+
+for g in graph:
+    g.sort()
+
+start_point, end_point = map(int,input().split())
+
+INF = int(1e9)
+costs = [INF]*(N+1)
+def dijkstra(start):
+    q = []
+    heapq.heappush(q,(0,start))
+    costs[start] = 0
+    while q:
+        cost, now = heapq.heappop(q)
+        if costs[now] < cost:
+            continue
+        for next, next_cost in graph[now]:
+            new_cost = cost + next_cost
+            if new_cost < costs[next]:
+                costs[next] = new_cost
+                heapq.heappush(q,(new_cost,next))
+
+
+dijkstra(start_point)
+
+print(costs[end_point])
+{% endhighlight %}

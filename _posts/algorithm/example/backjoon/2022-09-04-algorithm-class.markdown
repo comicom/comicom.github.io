@@ -13,6 +13,8 @@ tags:
 
 https://www.acmicpc.net/problemset?search=%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98+%EC%88%98%EC%97%85
 
+## 점근적 표기 1
+
 ## 피보나치 수 1
 
 {% highlight python %}
