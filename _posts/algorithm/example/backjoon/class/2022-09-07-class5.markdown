@@ -15,6 +15,46 @@ tags:
 
 dfs, 백트래킹
 
+시간초과
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+class dfs():
+    def __init__(self,dp):
+        self._dp = dp
+        self._min = (1e9)
+        self._tmp = []
+        self._min_num = []
+    def _dfs(self,n):
+        if n == 0:
+            if len(self._tmp)-1 < self._min:
+                self._min = len(self._tmp)-1
+                self._min_num = self._tmp.copy()
+            return
+        if n%3 == 0:
+            self._tmp.append(n)
+            self._dfs(n//3)
+            self._tmp.pop()
+        if n%2 == 0 :
+            self._tmp.append(n)
+            self._dfs(n//2)
+            self._tmp.pop()
+        self._tmp.append(n)
+        self._dfs(n-1)
+        self._tmp.pop()
+    def run(self,n):
+        self._dfs(n)
+        print(self._min)
+        print(' '.join(map(str,self._min_num)))
+dp = []
+dfs = dfs(dp)
+dfs.run(N)
+{% endhighlight %}
+
 ## 다각형의 면적
 
 https://www.acmicpc.net/problem/2166
@@ -136,6 +176,24 @@ print(result-high_cost)
 
 ## 스도쿠
 
+구현, 백트래킹
+
 ## 별자리 만들기
 
+스패닝 트리
+
 ## LCS 2
+
+다이나믹
+
+## 팰린드롬?
+
+다이나믹
+
+## RGB거리 2
+
+다이나믹
+
+## 사이클 게임
+
+자료 구조, 분리 집합
