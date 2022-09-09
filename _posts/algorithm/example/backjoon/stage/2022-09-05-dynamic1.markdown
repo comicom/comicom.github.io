@@ -1,0 +1,207 @@
+---
+layout: posts
+title:  "Dynamic Programming 1"
+date:   2022-09-04 12:10:28 +0900
+categories: Backjoon
+tags:
+  - python
+  - algorithm
+  - dynamic programming
+---
+
+# Introduction
+
+기초적인 동적 계획법 문제들을 풀어봅시다.
+
+# Example
+
+https://www.acmicpc.net/step/16
+
+## 01타일
+
+점화식의 값을 특정 상수로 나눈 나머지를 구하는 문제
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+# 1 하나만으로 이루어진 타일 또는 00 타일로 만들 수 있는 조합
+# 1, 1                                                          1
+# 2, 00, 11                                                     2
+# 3, 001, 100, 111                                              3
+# 4, 0000, 0011, 1100, 1001, 1111                               5
+# 5, 00001, 00100, 10000, 00111, 10011, 11001, 11100, 11111     8
+# f(n) = f(n-1) + f(n-2)
+
+dp = [0]*(N+1)
+
+if N >= 1:
+    dp[1] = 1
+if N >= 2:
+    dp[2] = 2
+if N > 2:
+    for i in range(3,N+1):
+        dp[i] = (dp[i-1] + dp[i-2])%15746
+
+print(dp[N])
+{% endhighlight %}
+
+## 연속합
+
+{% highlight python %}
+{% endhighlight %}
+
+## RGB 거리
+
+house를 2차원 배열로 선언
+
+ex) house[i][0](R), house[i][1](G), house[i][1](B)
+
+전체 점화식
+
+* i번째 house를 R로 칠한 경우, dp[i]는 i-1번째 house는 G 와 B 중 작은 값과 i번째 house R 값과 더한 것이다.
+    * dp[i][0] = min(dp[i-1][1], dp[i-1][2]) + house[i][0]
+* i번째 house를 B로 칠한 경우, dp[i]는 i-1번째 house는 R 와 G 중 작은 값과 i번째 house B 값과 더한 것이다.
+    * dp[i][1] = min(dp[i-1][0], dp[i-1][2]) + house[i][1]
+* i번째 house를 G로 칠한 경우, dp[i]는 i-1번째 house는 R 와 B 중 작은 값과 i번째 house G 값과 더한 것이다.
+    * dp[i][2] = min(dp[i-1][0], dp[i-1][1]) + house[i][2]
+
+점화식 요약
+
+결과는 dp[i]의 값 중 최소값이다.
+
+result = min(dp[i])
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+house = []
+for _ in range(N):
+    R, G, B = map(int,input().split())
+    house.append((R,G,B))
+
+dp = [[0,0,0] for _ in range(N)]
+dp[0][0], dp[0][1], dp[0][2] = house[0]
+
+for i in range(N):
+    dp[i][0] = min(dp[i-1][1],dp[i-1][2]) + house[i][0]
+    dp[i][1] = min(dp[i-1][0],dp[i-1][2]) + house[i][1]
+    dp[i][2] = min(dp[i-1][0],dp[i-1][1]) + house[i][2]
+print(min(dp[-1]))
+{% endhighlight %}
+
+## 정수 삼각형
+
+RGB 거리 푼 것을 응용하여 풀이
+
+n*n 2차원 배열로 dp 표현 (이중 반복문)
+
+{% highlight python %}
+int_try = [[0]*n for _ in range(n)]
+<!-- [[7, 0, 0, 0, 0],
+ [3, 8, 0, 0, 0],
+ [8, 1, 0, 0, 0],
+ [2, 7, 4, 4, 0],
+ [4, 5, 2, 6, 5]] -->
+{% endhighlight %}
+
+* row == 0이면,
+    * dp[col][row] = dp[col-1][row] + int_try[col][row]
+* row > 0이면,
+    * dp[col-1][row-1] + int_try[col][row]
+    * dp[col-1][row] + int_try[col][row]
+    * 둘 중 큰 값 선택
+    * 따라서, dp[col][row] = max(dp[col-1][row-1],dp[col-1][row]) + int_try[col][row]
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+
+int_tri = [[0]*n for _ in range(n)]
+
+for idx in range(n):
+    numbers = list(map(int,input().split()))
+    for num in range(len(numbers)):
+        int_tri[idx][num] = numbers[num]
+
+dp = [[0]*n for _ in range(n)]
+dp[0][0] = int_tri[0][0]
+
+for i in range(1,n):
+    for j in range(i+1):
+        if j == 0:
+            dp[i][j] = dp[i-1][j] + int_tri[i][j]
+        else:
+            dp[i][j] = max(dp[i-1][j-1], dp[i-1][j]) + int_tri[i][j]
+print(max(dp[-1]))
+{% endhighlight %}
+
+## 계단 오르기
+
+첫번째 계단은 밟을 수도 있고 안 밟을 수도 있다.
+
+마지막 계단은 반드시 밟이야한다.
+
+점화식
+* 이전 계단을 밟았을 경우와 이전 계단을 밟지 않았을 경우를 점화식으로 나타내면 된다.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+stair = []
+for _ in range(n):
+    stair.append(int(input()))
+
+# 점수 누적값
+dp = [0]*n
+
+if n >= 1:
+    dp[0] = stair[0]
+if n >= 2:
+    dp[1] = max(stair[0]+stair[1],stair[1])
+if n >= 3:
+    dp[2] = max(stair[0]+stair[2],stair[1]+stair[2])
+if n >= 4:
+    for i in range(3,n):
+        dp[i] = max(dp[i-3]+stair[i-1],dp[i-2]) + stair[i]
+print(dp[-1])
+{% endhighlight %}
+
+## 쉬운 계단 수
+
+{% highlight python %}
+{% endhighlight %}
+
+## 포도주 시식
+
+{% highlight python %}
+{% endhighlight %}
+
+## 가장 긴 바이토닉 부분 수열
+
+{% highlight python %}
+{% endhighlight %}
+
+## 전깃줄
+
+{% highlight python %}
+{% endhighlight %}
+
+## LCS
+
+{% highlight python %}
+{% endhighlight %}
+
+## 평범한 배낭
+
+{% highlight python %}
+{% endhighlight %}

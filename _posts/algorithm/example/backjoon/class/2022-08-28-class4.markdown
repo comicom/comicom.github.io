@@ -29,6 +29,9 @@ print(up//down)
 
 ### A -> B
 
+### 트리의 부모 찾기
+
+
 ## 골드
 
 ### 후위 표기식
@@ -144,7 +147,46 @@ https://www.acmicpc.net/problem/9935
 
 ### 플로이드
 
--> 플로이드 와샬
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+m = int(input())
+
+# 인접행렬 생성
+INF = (1e9)
+min_dist_table = [[INF]*(n+1) for _ in range(n+1)]
+
+for a in range(1, n+1):
+    for b in range(1, n+1):
+        if a == b:
+            min_dist_table[a][b] =0
+
+for _ in range(m):
+    a, b, c = map(int,input().split())
+    min_dist_table[a][b] = min(min_dist_table[a][b],c)
+
+## 플로이드 워셜 알고리즘 (점화식 기반)
+# 경로
+for k in range(1, n+1):
+    # 출발
+    for a in range(1, n+1):
+        # 도착
+        for b in range(1, n+1):
+            min_dist_table[a][b] = min(min_dist_table[a][b], min_dist_table[a][k] + min_dist_table[k][b])
+
+# 결과 출력
+for a in range(1, n + 1):
+    for b in range(1, n +1):
+        # 노드를 방문할 수 없는 경우, '무한' 값 출력
+        if min_dist_table[a][b] == INF:
+            print(0, end = ' ')
+        else:
+            # 노드를 방문할 수 있을 경우 최단 거리 출력
+            print(min_dist_table[a][b], end = ' ')
+    # 개행1
+    print()
+{% endhighlight %}
 
 ### 숨바꼭질 2
 
@@ -212,6 +254,38 @@ print(costs[end_point])
 
 -> 다이나믹 프로그래밍, 슬라이딩 윈도우
 
+메모리 제한이 4MB이기 때문에, 2차원 배열로 만들면 메모리 초과가 발생한다.
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+
+# max_dp[i][0] = max(dp[i-1][0],dp[i-1][1]) + table[i][0]
+# max_dp[i][1] = max(dp[i-1][0],dp[i-1][1],dp[i-1][2]) + table[i][1]
+# max_dp[i][2] = max(dp[i-1][1],dp[i-1][2]) + table[i][2]
+max_data = [0,0,0]
+min_data = [0,0,0]
+pre_max_data = [0,0,0]
+pre_min_data = [0,0,0]
+for i in range(0,n):
+    a, b, c = map(int,input().split())
+    # MAX
+    max_data[0] = max(pre_max_data[0],pre_max_data[1]) + a
+    max_data[1] = max(pre_max_data[0],pre_max_data[1],pre_max_data[2]) + b
+    max_data[2] = max(pre_max_data[1],pre_max_data[2]) + c
+    # MIN
+    min_data[0] = min(pre_min_data[0],pre_min_data[1]) + a
+    min_data[1] = min(pre_min_data[0],pre_min_data[1],pre_min_data[2]) + b
+    min_data[2] = min(pre_min_data[1],pre_min_data[2]) + c
+    # trans
+    pre_max_data[0], pre_max_data[1], pre_max_data[2] = max_data[0], max_data[1], max_data[2]
+    pre_min_data[0], pre_min_data[1], pre_min_data[2] = min_data[0], min_data[1], min_data[2]
+
+print(max(pre_max_data),min(min_data))
+{% endhighlight %}
+
 ### LCS
 
 -> 다이나믹 프로그래밍, 문자열
@@ -231,3 +305,99 @@ print(costs[end_point])
 ### 파이프 옮기기1
 
 -> 다이나믹 프로그래밍, 그래프이론, 그래프 탐색
+
+dfs 시간초과 -> pypy3로 컴파일
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+maps = []
+for _ in range(n):
+    maps.append(list(map(int,input().split())))
+
+# pos, 가로(0), 세로(1), 대각선(2)
+# if pos == 0:    x, y = x, y+1 or x, y = x+1, y+1
+# if pos == 1:    x, y = x+1, y or x, y = x+1, y+1
+# if pos == 2:    x, y = x, y+1 or x, y = x+1, y or x, y = x+1, y+1
+# if x > len(maps) or y > len(maps[0]): break
+# if map[x][y] == 1: break
+
+class dfs():
+    def __init__(self,map,n):
+        self._map = map
+        self._cnt = 0
+        self._n = n-1
+    def _dfs(self,x,y,pos):
+        if x==self._n and y==self._n:
+            self._cnt += 1
+            return
+        ## 이동
+        # 가로
+        if pos == 0:
+            if y < self._n and self._map[x][y+1] == 0:
+                self._dfs(x,y+1,0)
+            if x < self._n and y < self._n:
+                if self._map[x+1][y] == 0 and self._map[x+1][y+1] == 0 and self._map[x][y+1] == 0:
+                    self._dfs(x+1,y+1,2)
+        # 세로
+        elif pos == 1 and x < self._n  and self._map[x+1][y] == 0:
+            if x < self._n and self._map[x+1][y] == 0:
+                self._dfs(x+1,y,1)
+            if x < self._n and y < self._n:
+                if self._map[x+1][y] == 0 and self._map[x+1][y+1] == 0 and self._map[x][y+1] == 0:
+                    self._dfs(x+1,y+1,2)
+        # 대각선
+        elif pos == 2:
+            if y < self._n and self._map[x][y+1] == 0:
+                self._dfs(x,y+1,0)
+            if x < self._n and self._map[x+1][y] == 0:
+                self._dfs(x+1,y,1)
+            if x < self._n and y < self._n:
+                if self._map[x+1][y] == 0 and self._map[x+1][y+1] == 0 and self._map[x][y+1] == 0:
+                    self._dfs(x+1,y+1,2)
+    def run(self,start_x,start_y,start_pos):
+        self._dfs(start_x,start_y,start_pos)
+        print(self._cnt)
+
+dfs = dfs(maps,n)
+dfs.run(0,1,0)
+{% endhighlight %}
+
+dp 코드(시간 및 메모리면에서 더 좋다)
+
+가능한 경로값 누적
+
+{% highlight python %}
+# 17070 DP로 풀어보기 !!
+
+n = int(input())
+array = []
+for _ in range(n):
+    array.append(list(map(int, input().split())))
+
+result = [[[0]*n for _ in range(n)] for _ in range(3)]
+result[0][0][1] = 1 # 맨 처음 파이프의 위치
+
+# x == 0 (가로 방)향 인 row 1로 초기화
+for i in range(2, n):
+    if array[0][i] == 0:
+        result[0][0][i] = result[0][0][i-1]
+
+for i in range(1, n):
+    for j in range(2, n):
+        # 대각선으로 오는 경우 - 양 옆의 세 칸이 모두 빈칸인지 확인
+        if array[i][j] == 0 and array[i-1][j] == 0 and array[i][j-1] == 0:
+            # 대각선으로 올때 : 가로, 세로 대각선 모두 가능!
+            result[2][i][j] = result[0][i-1][j-1] + result[1][i-1][j-1] + result[2][i-1][j-1]
+
+        if array[i][j] == 0:
+            # 가로로 올 때 : 가로에서 가로, 대각선에서 가로
+            result[0][i][j] = result[0][i][j-1] + result[2][i][j-1]
+            # 세로로 올 때 : 세로에서 세로, 대각선에서 세로
+            result[1][i][j] = result[1][i-1][j] + result[2][i-1][j]
+
+# 총합 : 가로 세로 대각선 방향
+print(result[0][n-1][n-1] + result[1][n-1][n-1] + result[2][n-1][n-1])
+{% endhighlight %}
