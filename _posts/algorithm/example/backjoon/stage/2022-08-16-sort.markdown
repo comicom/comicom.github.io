@@ -183,6 +183,23 @@ for o in output:
 
 ## 수 정렬하기 3
 
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+numbers = [0]*(10001)
+for _ in range(N):
+    num = int(input())
+    numbers[num] += 1
+
+for i in range(10001):
+    if numbers[i] != 0:
+        for _ in range(numbers[i]):
+            print(i)
+{% endhighlight %}
+
 ## 커트라인
 
 https://www.acmicpc.net/problem/25305
@@ -304,3 +321,20 @@ for r in result:
 ## 나이순 정렬
 
 ## 좌표 압축
+
+{% highlight python %}
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+
+number_list = list(map(int,input().split()))
+number = list(set(number_list))
+number.sort()
+
+number_dict = {}
+for i in range(len(number)):
+    number_dict[number[i]] = i
+for n in number_list:
+    print(number_dict[n], end=" ")
+{% endhighlight %}
