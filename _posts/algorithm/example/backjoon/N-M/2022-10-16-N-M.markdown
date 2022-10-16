@@ -1,0 +1,32 @@
+---
+layout: posts
+title:  "[백준시리즈] N과 M Overview"
+date:   2022-10-16 12:10:28 +0900
+categories: BackjoonSeries:N-M
+tags:
+  - python
+  - algorithm
+  - backtracking
+  - series
+---
+
+# Introduction
+
+복습 + 정리할 겸 다시 풀어보는 N과 M
+
+dfs를 이용한 백트래킹을 연습하기 좋다.
+
+https://www.acmicpc.net/workbook/view/2052
+
+* N과 M 1
+* N과 M 2
+* N과 M 3
+* N과 M 4
+* N과 M 5
+* N과 M 6
+* N과 M 7
+* N과 M 8
+* N과 M 9
+* N과 M 10
+* N과 M 11
+* N과 M 12

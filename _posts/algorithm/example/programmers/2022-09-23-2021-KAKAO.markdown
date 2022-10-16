@@ -14,9 +14,64 @@ tags:
 
 ## 메뉴 리뉴얼
 
-조합
+{% highlight python %}
+from itertools import combinations
+from collections import Counter
+
+def solution(orders, course):
+    answer = []
+    for c in course:
+        order_comb = []
+        for order in orders:
+            for comb in combinations(order,c):
+                order_comb.append(''.join(sorted(comb)))
+        order_count = Counter(order_comb).most_common()
+        # print(order_count)
+        max = order_count[0][1] if len(order_count) > 1 else 0
+        if max == 0 or max == 1:
+            pass
+        else:
+            for order in order_count:
+                if order[1] == max:
+                    answer.append(order[0])
+                else:
+                    break
+    return sorted(answer)
+{% endhighlight %}
 
 ## 합승 택시 요금
+
+{% highlight python %}
+import heapq
+INF = int(1e9)
+
+def dijkstra(graph, start, n):
+    q = []
+    visited = [INF] * (n+1)
+    distance = [INF] * (n+1)
+    distance[start] = 0
+    heapq.heappush(q,(0,start))
+    while q:
+        dist, now = heapq.heappop(q)
+        if distance[now] < dist:
+            continue
+        for i in graph[now]:
+            cost = dist + i[1]
+            if cost < distance[i[0]]:
+                distance[i[0]] = cost
+                heapq.heappush(q, (cost,i[0]))
+    return distance
+
+def solution(n, s, a, b, fares):
+    graph = [[] for i in range(n+1)]
+    for f in fares:
+        graph[f[0]].append((f[1],f[2]))
+        graph[f[1]].append((f[0],f[2]))
+    answer = INF
+    for i in range(1, n+1):
+        answer = min(answer,dijkstra(graph,s,n)[i]+dijkstra(graph,i,n)[a]+dijkstra(graph,i,n)[b])
+    return answer
+{% endhighlight %}
 
 ## 순위 검색
 
