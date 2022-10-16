@@ -12,21 +12,4 @@ tags:
 
 # Introduction
 
-복습할 겸 다시 풀어보는 N과 M
 
-dfs를 이용한 백트래킹을 연습하기 좋다.
-
-https://www.acmicpc.net/workbook/view/2052
-
-* N과 M 1
-* N과 M 2
-* N과 M 3
-* N과 M 4
-* N과 M 5
-* N과 M 6
-* N과 M 7
-* N과 M 8
-* N과 M 9
-* N과 M 10
-* N과 M 11
-* N과 M 12
