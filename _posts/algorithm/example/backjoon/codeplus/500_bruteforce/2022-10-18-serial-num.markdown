@@ -1,7 +1,7 @@
 ---
 layout: posts
 title:  "[백준 code.plus] 500 - 브루트 포스, 수 이어 쓰기 1"
-date:   2022-10-19 12:31:28 +0900
+date:   2022-10-18 12:34:28 +0900
 categories: BackjoonSeries:500-Bruteforce
 tags:
   - python

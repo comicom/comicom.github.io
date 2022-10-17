@@ -17,9 +17,9 @@ https://www.acmicpc.net/workbook/view/3962
 
 제공되는 입력값이 많지 않아 반복 연산이 많아도 시간제한에 잘 걸리지 않는다.
 
-* 일곱 난쟁이
+* [일곱 난쟁이](https://comicom.github.io/backjoonseries:500-bruteforce/seven-minimi/)
 * 사탕 게임
-* 날짜 계산
+* [날짜 계산](https://comicom.github.io/backjoonseries:500-bruteforce/caculate-date/)
 * 리모컨
 * 테트로미노
 * 카잉 달력
