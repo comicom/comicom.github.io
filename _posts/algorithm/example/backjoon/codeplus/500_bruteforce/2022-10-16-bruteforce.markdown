@@ -2,7 +2,7 @@
 layout: posts
 title:  "[백준 code.plus] 500 - 브루트 포스 Overview"
 date:   2022-10-16 12:30:28 +0900
-categories: BackjoonSeries:Simulation
+categories: BackjoonSeries:500-Bruteforce
 tags:
   - python
   - algorithm

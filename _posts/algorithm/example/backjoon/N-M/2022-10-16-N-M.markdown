@@ -18,9 +18,9 @@ dfs를 이용한 백트래킹을 연습하기 좋다.
 
 https://www.acmicpc.net/workbook/view/2052
 
-* N과 M 1
-* N과 M 2
-* N과 M 3
+* [N과 M 1](https://comicom.github.io/backjoonseries:n-m/N-M_1/)
+* [N과 M 2](https://comicom.github.io/backjoonseries:n-m/N-M_2/)
+* [N과 M 3](https://comicom.github.io/backjoonseries:n-m/N-M_3/)
 * N과 M 4
 * N과 M 5
 * N과 M 6

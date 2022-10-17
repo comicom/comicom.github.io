@@ -2,7 +2,7 @@
 layout: posts
 title:  "[백준 code.plus] 500 - 브루트 포스, 일곱난쟁이"
 date:   2022-10-16 12:31:28 +0900
-categories: BackjoonSeries:Simulation
+categories: BackjoonSeries:500-Bruteforce
 tags:
   - python
   - algorithm
@@ -33,6 +33,7 @@ https://www.acmicpc.net/problem/2309
 ## 설계
 
 * 아홉난쟁이의 키의 합은 100+나머지 난쟁이의 키와 같다.
+* 포함되지 않는 난쟁이는 제거한다.
 * 난쟁이 키를 오름차순으로 출력한다.
 
 ## 코딩
