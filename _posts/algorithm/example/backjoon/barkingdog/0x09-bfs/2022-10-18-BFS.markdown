@@ -1,6 +1,6 @@
 ---
 layout: posts
-title:  "[백준 code.plus] 0x09 - BFS Overview"
+title:  "[백준 바킹독] 0x09 - BFS Overview"
 date:   2022-10-18 13:30:28 +0900
 categories: BackjoonBarkingDog:0x09-BFS
 tags:

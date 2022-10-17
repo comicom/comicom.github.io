@@ -23,5 +23,5 @@ https://www.acmicpc.net/workbook/view/3962
 * 리모컨
 * 테트로미노
 * 카잉 달력
-* 수 이어 쓰기 1
+* [수 이어 쓰기 1](https://comicom.github.io/backjoonseries:500-bruteforce/serial-num/)
 * 1, 2, 3 더하기
