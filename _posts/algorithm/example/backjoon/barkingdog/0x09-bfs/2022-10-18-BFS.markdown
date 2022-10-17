@@ -1,0 +1,48 @@
+---
+layout: posts
+title:  "[백준 code.plus] 0x09 - BFS Overview"
+date:   2022-10-18 13:30:28 +0900
+categories: BackjoonBarkingDog:0x09-BFS
+tags:
+  - python
+  - algorithm
+  - bfs
+  - barkingdog
+  - series
+---
+
+# Introduction
+
+https://www.acmicpc.net/workbook/view/7313
+
+너비 우선 탐색 예제
+
+* 그림
+* 미로 탐색
+* 토마토(7576)
+* 불!
+* 숨바꼭질
+* 유기농 배추
+* 적록색약
+* 토마토(7569)
+* 나이트의 이동
+* 불
+* 영역 구하기
+* 단지번호붙이기
+* 스타트링크
+* 안전영역
+* 상범 빌딩
+* 벽 부수고 이동하기
+* 텀 프로젝트
+* 빙산
+* 다리 만들기
+* 숨바꼭질 3
+* 말이 되고픈 원숭이
+* 숨바꼭질 4
+* 벽 부수고 이동하기 2
+* 벽 부수고 이동하기 3
+* 확장 게임
+* 불켜기
+* 숨바꼭질 5
+* 열쇠
+* 백조의 호수

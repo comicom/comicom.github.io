@@ -1,0 +1,101 @@
+---
+layout: posts
+title:  "[백준 code.plus] 0x09 - BFS 그림"
+date:   2022-10-18 13:31:28 +0900
+categories: BackjoonBarkingDog:0x09-BFS
+tags:
+  - python
+  - algorithm
+  - bfs
+  - barkingdog
+  - series
+---
+
+# Introduction
+
+https://www.acmicpc.net/problem/1926
+
+## 문제
+어떤 큰 도화지에 그림이 그려져 있을 때, 그 그림의 개수와, 그 그림 중 넓이가 가장 넓은 것의 넓이를 출력하여라. 단, 그림이라는 것은 1로 연결된 것을 한 그림이라고 정의하자. 가로나 세로로 연결된 것은 연결이 된 것이고 대각선으로 연결이 된 것은 떨어진 그림이다. 그림의 넓이란 그림에 포함된 1의 개수이다.
+
+## 입력
+첫째 줄에 도화지의 세로 크기 n(1 ≤ n ≤ 500)과 가로 크기 m(1 ≤ m ≤ 500)이 차례로 주어진다. 두 번째 줄부터 n+1 줄 까지 그림의 정보가 주어진다. (단 그림의 정보는 0과 1이 공백을 두고 주어지며, 0은 색칠이 안된 부분, 1은 색칠이 된 부분을 의미한다)
+
+## 출력
+첫째 줄에는 그림의 개수, 둘째 줄에는 그 중 가장 넓은 그림의 넓이를 출력하여라. 단, 그림이 하나도 없는 경우에는 가장 넓은 그림의 넓이는 0이다.
+
+# 풀이
+
+## 설계
+
+* search에서는 방문 했는 지 n*m 번 확인한다.
+  * 방문하지 않았고 그림이 있는 경우 bfs 탐색을 진행한다.
+    * bfs는 deque를 이용하여 구현하였다.
+    * 2차원 배열이므로 좌,우,위,아래 총 4가지 상황을 가정하여 탐색하고 deque에 추가하였다.
+    * bfs 탐색이 종료되기 전까지(범위에 그림이 없을 때까지) 탐색하고 count를 올린다.
+    * count를 반환한다.
+  * bfs 함수를 한 번 실행할 때마다(새로운 그림이 발견 될때마다) paint_count를 올린다.
+  * max_count의 초기값을 0으로 설정하고, bfs 함수의 반환값 count가 max_count보다 크면 max_count에 count를 대입한다.
+  * paint_count와 max_count를 반환한다.
+
+## 코딩
+
+{% highlight python %}
+from collections import deque
+
+n, m = map(int,input().split())
+
+painting = []
+for _ in range(n):
+    painting.append(list(map(int,input().split())))
+
+visited = [[0]*m for _ in range(n)]
+def bfs(paint,x,y,n,m):
+    global visited
+    count = 1
+    q = deque([[x,y]])
+    paint[x][y] = 0
+    visited[x][y] = 1
+    while q:
+        col, row = q.popleft()
+        # 오른쪽
+        if row+1<m and paint[col][row+1]==1 and visited[col][row+1]==0:
+            q.append([col,row+1])
+            paint[col][row+1] = 0
+            visited[col][row+1] = 1
+            count += 1
+        # 아래
+        if col+1<n and paint[col+1][row]==1 and visited[col+1][row]==0:
+            q.append([col+1,row])
+            paint[col+1][row] = 0
+            visited[col+1][row] = 1
+            count += 1
+        # 왼쪽
+        if row-1>=0 and paint[col][row-1]==1 and visited[col][row-1]==0:
+            q.append([col,row-1])
+            paint[col][row-1] = 0
+            visited[col][row-1] = 1
+            count += 1
+        # 위
+        if col-1>=0 and paint[col-1][row]==1 and visited[col-1][row]==0:
+            q.append([col-1,row])
+            paint[col-1][row] = 0
+            visited[col-1][row] = 1
+            count += 1
+    return count
+def search(paint,n,m):
+    global visited
+    max_count = 0
+    paint_count = 0
+    count = 0
+    for i in range(n):
+        for j in range(m):
+            if paint[i][j] == 1 and visited[i][j] == 0:
+                paint_count += 1
+                count = bfs(paint,i,j,n,m)
+                if max_count < count:
+                    max_count=count
+    return paint_count, max_count
+
+print("\n".join(map(str,search(painting,n,m))))
+{% endhighlight %}
