@@ -17,7 +17,7 @@ https://www.acmicpc.net/workbook/view/7313
 
 너비 우선 탐색 예제
 
-* 그림
+* [그림](https://comicom.github.io/backjoonbarkingdog:0x09-bfs/painting/)
 * 미로 탐색
 * 토마토(7576)
 * 불!
