@@ -39,15 +39,65 @@ https://www.acmicpc.net/problem/7576
 * m*n 번 탐색하여 1일경우, 위치를 deque에 추가한다.
 * bfs 탐색을 진행한다
     * 초기 토마토 위치를 parameter로 받아 deque에 추가한다.
-    * 변수 count를 0으로 선언한다.
+    * 초기 level은 0으로 설정한다.
     * 2차원 배열이므로 좌,우,위,아래 총 4가지 상황을 가정하여 탐색하지 않은 곳(값이 0인 곳)을 deque에 추가한다.
     * 탐색한 구역은 1로 변경한다.
-    * deque에 추가될 때마다 count를 증가시킨다.
-    * count를 반환한다.
+    * deque에 추가될 때마다 이전 level을 1 증가시킨다.
+    * 가장 큰 level을 반환한다.
 * m*n 번 탐색하여 0이 있을 경우 -1, 0이 없을 경우 count를 출력한다.
 
 ## 코딩
 
 {% highlight python %}
+from collections import deque
 
+M, N = map(int,input().split())
+tomato_map = []
+for _ in range(N):
+    t = list(map(int,input().split()))
+    tomato_map.append(t)
+
+tomato = deque([])
+for y in range(N):
+    for x in range(M):
+        if tomato_map[y][x] == 1:
+            tomato.append([x,y,0])
+
+# bfs
+result = 0
+max_level = 0
+while tomato:
+    x, y, level = tomato.popleft()
+    if max_level < level:
+        max_level = level
+    # 오른쪽
+    if x+1 < M and tomato_map[y][x+1] == 0:
+        tomato_map[y][x+1] = 1
+        tomato.append([x+1,y,level+1])
+    # 아래
+    if y+1 < N and tomato_map[y+1][x] == 0:
+        tomato_map[y+1][x] = 1
+        tomato.append([x,y+1,level+1])
+    # 왼쪽
+    if x-1 >= 0 and tomato_map[y][x-1] == 0:
+        tomato_map[y][x-1] = 1
+        tomato.append([x-1,y,level+1])
+    # 위
+    if y-1 >= 0 and tomato_map[y-1][x] == 0:
+        tomato_map[y-1][x] = 1
+        tomato.append([x,y-1,level+1])
+
+tomatoFlag = False
+for y in range(N):
+    for x in range(M):
+        if tomato_map[y][x] == 0:
+            tomatoFlag = True
+            break
+    if tomatoFlag == True:
+        break
+
+if tomatoFlag == True:
+    print(-1)
+else:
+    print(max_level)
 {% endhighlight %}
